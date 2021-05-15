@@ -5,7 +5,7 @@ package frc.robot;
  * 
  * Author: Francisco Fabregat
  */
-public class Config {
+public final class Config {
 
     /* Configuration for drivetrain speeds */
     public static double moveMinSpeed = 0.2;
@@ -15,6 +15,9 @@ public class Config {
     public static double turnAccel = 0.075;
     public static double driveTargetAdjustSpeed = 0.3;
     public static double driveManualAdjustSpeed = 0.3;
+
+    /* Configuration for intake */
+    public static double intakeSpeed = 0.7;
 
     /* Limelight variables */
     public static double limelightHeight = 19.875; //inches

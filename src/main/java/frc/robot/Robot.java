@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.paths.Straight;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Intake;
 
 /*
  * This is the "main" class
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
   /* Initialize OI and Subsystems */
   public static OI oi;
   public static Drive driveTrain;
+  public static Intake intake;
 
   /* Define default autonomous mode id */
   private int mode = 0;
@@ -49,6 +51,7 @@ public class Robot extends TimedRobot {
 
     /* Define OI and Subsystems */
     driveTrain = new Drive();
+    intake = new Intake();
     oi = new OI();
 
     /* Set Default Commands for Subsystems */
@@ -60,6 +63,8 @@ public class Robot extends TimedRobot {
     /* Select default autonomous mode */
     dashboard.setAutonomous(0);
 
+    /* Raise intake to initial position */
+    intake.raise();
   }
 
   /*

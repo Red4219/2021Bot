@@ -3,6 +3,9 @@ package frc.robot;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -12,7 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * Author: Francisco Fabregat
  */
 public class RobotMap {
-    /* Initialize drive Spark variables */
+  /* Initialize drive Spark variables */
   public static CANSparkMax FrontLeftMotor;
   public static CANSparkMax MiddleLeftMotor;
   public static CANSparkMax BackLeftMotor;
@@ -27,9 +30,18 @@ public class RobotMap {
   /* Initialize DifferentialDrive */
   public static DifferentialDrive robotDrive;
   
+  /* Initialize motors */
+  public static CANSparkMax intakeMotor;
+
   /* Initialize encoders */
   public static CANEncoder leftDriveEncoder;
   public static CANEncoder rightDriveEncoder;
+
+  /* Initialize compressor*/
+  public static Compressor compressor;
+
+  /* Initialize intake solenoid */
+  public static Solenoid intakeSolenoid;
 
   /*
    * Initialize all components
@@ -59,8 +71,17 @@ public class RobotMap {
     /* Define robotDrive as a DifferentialDrive for drivetrain */
     robotDrive = new DifferentialDrive(leftGroup, rightGroup);
 
+    /* Define SPARK MAX with CAN id */
+    intakeMotor = new CANSparkMax(7, MotorType.kBrushless);
+
     /* Define encoders */
     leftDriveEncoder = MiddleLeftMotor.getEncoder();
     rightDriveEncoder = MiddleRightMotor.getEncoder();
+
+    /* Define compressor */
+    compressor = new Compressor(0);
+
+    /* Define intake solenoid */
+    intakeSolenoid = new Solenoid(0);
   }
 }

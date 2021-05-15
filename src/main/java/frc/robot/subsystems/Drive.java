@@ -52,12 +52,16 @@ public class Drive extends SubsystemBase {
         robotDrive.tankDrive(Config.driveTargetAdjustSpeed* -1, Config.driveTargetAdjustSpeed);
     }
 
-    /* Spins robot to the left for manual adjustment */
+    /*
+     * Spins robot to the left for manual adjustment
+     */
     public void spinAdjustLeft() {
         robotDrive.tankDrive(Config.driveManualAdjustSpeed, Config.driveManualAdjustSpeed * -1);
     }
 
-    /* Spins robot to the right for manual adjustment */
+    /*
+     * Spins robot to the right for manual adjustment
+     */
     public void spinAdjustRight() {
         robotDrive.tankDrive(Config.driveManualAdjustSpeed * -1, Config.driveManualAdjustSpeed);
     }
@@ -93,3 +97,34 @@ public class Drive extends SubsystemBase {
     }
 
 }
+/*
+var Xl = 40;
+var Xs = 10;
+var x = Xl + Xs + 29.25;
+
+var Hs = 36;
+var y = 98.25 - Hs;
+
+var RPM = 1300;
+var Vo = (RPM * 2 * Math.PI * 3) / 60;
+var g = 9.81;
+
+var radiansPositive = Math.atan((Math.pow(Vo, 2) + Math.sqrt(Math.pow(Vo, 4) - g * ((g * Math.pow(x, 2)) + 2 * y * Math.pow(Vo, 2)))) / (g * x));
+var radiansNegative = Math.atan((Math.pow(Vo, 2) - Math.sqrt(Math.pow(Vo, 4) - g * ((g * Math.pow(x, 2)) + 2 * y * Math.pow(Vo, 2)))) / (g * x));
+
+var degreesPositive = (radiansPositive * 180) / Math.PI;
+var degreesNegative = (radiansNegative * 180) / Math.PI;
+console.log(Vo);
+console.log(radiansPositive);
+console.log(radiansNegative);
+console.log(degreesPositive);
+console.log(degreesNegative);
+
+if (degreesNegative > 0) {
+  console.log("Set shooter to "+degreesNegative+" degrees");
+} else if (degreesPositive < 90) {
+  console.log("Set shooter to "+degreesPositive+" degrees");
+} else {
+  console.log("Not Possible");
+}
+*/
