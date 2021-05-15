@@ -41,7 +41,6 @@ public class RobotMap {
   public static Compressor compressor;
 
   /* Initialize intake solenoid */
-  public static Solenoid intakeSolenoid;
 
   /*
    * Initialize all components
@@ -57,12 +56,12 @@ public class RobotMap {
     BackRightMotor = new CANSparkMax(1, MotorType.kBrushless);
 
     /* Set ramp rate for drive motors to decrease current drawn and prevent browning out */
-    FrontLeftMotor.setOpenLoopRampRate(0.1);
-    MiddleLeftMotor.setOpenLoopRampRate(0.1);
-    BackLeftMotor.setOpenLoopRampRate(0.1);
-    FrontRightMotor.setOpenLoopRampRate(0.1);
-    MiddleRightMotor.setOpenLoopRampRate(0.1);
-    BackRightMotor.setOpenLoopRampRate(0.1);
+    FrontLeftMotor.setOpenLoopRampRate(0.5);
+    MiddleLeftMotor.setOpenLoopRampRate(0.5);
+    BackLeftMotor.setOpenLoopRampRate(0.5);
+    FrontRightMotor.setOpenLoopRampRate(0.5);
+    MiddleRightMotor.setOpenLoopRampRate(0.5);
+    BackRightMotor.setOpenLoopRampRate(0.5);
     
     /* Define SpeedControllerGroups for DifferentialDrive */
     leftGroup = new SpeedControllerGroup(FrontLeftMotor, MiddleLeftMotor, BackLeftMotor);
@@ -72,16 +71,13 @@ public class RobotMap {
     robotDrive = new DifferentialDrive(leftGroup, rightGroup);
 
     /* Define SPARK MAX with CAN id */
-    intakeMotor = new CANSparkMax(7, MotorType.kBrushless);
+    intakeMotor = new CANSparkMax(10, MotorType.kBrushless);
 
     /* Define encoders */
     leftDriveEncoder = MiddleLeftMotor.getEncoder();
     rightDriveEncoder = MiddleRightMotor.getEncoder();
 
     /* Define compressor */
-    compressor = new Compressor(0);
-
-    /* Define intake solenoid */
-    intakeSolenoid = new Solenoid(0);
+    //compressor = new Compressor(0);
   }
 }

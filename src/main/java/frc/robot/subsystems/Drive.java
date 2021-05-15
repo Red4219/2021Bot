@@ -18,16 +18,7 @@ public class Drive extends SubsystemBase {
 
     /* Make this class public */
     public Drive() {}
-
-    /*
-     * Arcade drive is used for teleop (manual driving)
-     */
-    public void arcadeDrive(double moveAxis, double rotateAxis) {
-
-        /* Sets arcadeDrive values */
-        robotDrive.arcadeDrive(moveAxis, -rotateAxis);
-    }
-
+    
     /*
      * Tank drive is used for autonomous
      */
