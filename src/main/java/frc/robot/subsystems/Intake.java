@@ -19,6 +19,7 @@ public class Intake extends SubsystemBase {
 
     /* Call intakeSolenoid defined in RobotMap */
     //Solenoid intakeSolenoid = RobotMap.intakeSolenoid;
+    CANSparkMax intakeLiftMotor = RobotMap.intakeLiftMotor;
 
     /*
      * Make this class public
@@ -30,6 +31,7 @@ public class Intake extends SubsystemBase {
      */
     public void lower() {
         //intakeSolenoid.set(false);
+        intakeLiftMotor.set(-Config.intakeDownSpeed);
     }
 
     /*
@@ -37,6 +39,7 @@ public class Intake extends SubsystemBase {
      */
     public void raise() {
         //intakeSolenoid.set(true);
+        intakeLiftMotor.set(Config.intakeLiftSpeed);
     }
 
     /*
@@ -51,6 +54,10 @@ public class Intake extends SubsystemBase {
      */
     public void stop() {
         intakeMotor.stopMotor();
+    }
+
+    public void stopLift() {
+        intakeLiftMotor.stopMotor();
     }
 
     /*

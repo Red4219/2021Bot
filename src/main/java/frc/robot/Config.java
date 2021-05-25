@@ -18,6 +18,8 @@ public final class Config {
 
     /* Configuration for intake */
     public static double intakeSpeed = 0.7;
+    public static double intakeLiftSpeed = 0.4;
+    public static double intakeDownSpeed = 0.1;
 
     /* Limelight variables */
     public static double limelightHeight = 19.875; //inches

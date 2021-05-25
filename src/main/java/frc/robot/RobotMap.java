@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -32,6 +31,7 @@ public class RobotMap {
   
   /* Initialize motors */
   public static CANSparkMax intakeMotor;
+  public static CANSparkMax intakeLiftMotor;
 
   /* Initialize encoders */
   public static CANEncoder leftDriveEncoder;
@@ -72,6 +72,7 @@ public class RobotMap {
 
     /* Define SPARK MAX with CAN id */
     intakeMotor = new CANSparkMax(10, MotorType.kBrushless);
+    intakeLiftMotor = new CANSparkMax(11, MotorType.kBrushless);
 
     /* Define encoders */
     leftDriveEncoder = MiddleLeftMotor.getEncoder();

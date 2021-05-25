@@ -62,9 +62,6 @@ public class Robot extends TimedRobot {
 
     /* Select default autonomous mode */
     dashboard.setAutonomous(0);
-
-    /* Raise intake to initial position */
-    intake.raise();
   }
 
   /*
