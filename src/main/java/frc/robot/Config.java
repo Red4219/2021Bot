@@ -21,6 +21,12 @@ public final class Config {
     public static double intakeLiftSpeed = 0.4;
     public static double intakeDownSpeed = 0.1;
 
+    /* Configuration for revolver */
+    public static double revolverSpeed = 0.5;
+
+    /* Configuration for shooter */
+    public static double shooterSpeed = 0.9;
+
     /* Limelight variables */
     public static double limelightHeight = 19.875; //inches
     public static double targetHeight = 98.19; //inches

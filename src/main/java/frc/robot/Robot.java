@@ -13,6 +13,7 @@ import frc.robot.autonomous.paths.Straight;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Revolver;
 
 /*
  * This is the "main" class
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static Drive driveTrain;
   public static Intake intake;
+  public static Revolver revolver;
 
   /* Define default autonomous mode id */
   private int mode = 0;
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
     /* Define OI and Subsystems */
     driveTrain = new Drive();
     intake = new Intake();
+    revolver = new Revolver();
     oi = new OI();
 
     /* Set Default Commands for Subsystems */

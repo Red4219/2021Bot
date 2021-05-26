@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Config;
 import frc.robot.RobotMap;
@@ -18,7 +17,6 @@ public class Intake extends SubsystemBase {
     CANSparkMax intakeMotor = RobotMap.intakeMotor;
 
     /* Call intakeSolenoid defined in RobotMap */
-    //Solenoid intakeSolenoid = RobotMap.intakeSolenoid;
     CANSparkMax intakeLiftMotor = RobotMap.intakeLiftMotor;
 
     /*
