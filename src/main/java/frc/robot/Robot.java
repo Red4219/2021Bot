@@ -14,6 +14,8 @@ import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Revolver;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterAlign;
 
 /*
  * This is the "main" class
@@ -30,6 +32,8 @@ public class Robot extends TimedRobot {
   public static Drive driveTrain;
   public static Intake intake;
   public static Revolver revolver;
+  public static Shooter shooter;
+  public static ShooterAlign shooterAlign;
 
   /* Define default autonomous mode id */
   private int mode = 0;
@@ -43,7 +47,7 @@ public class Robot extends TimedRobot {
   /* Initialize Limelight */
   public static Limelight limelight = new Limelight();
 
-   /*
+  /*
    * This function is executed only once when the robot boots up
    */
   @Override
@@ -55,6 +59,8 @@ public class Robot extends TimedRobot {
     driveTrain = new Drive();
     intake = new Intake();
     revolver = new Revolver();
+    shooter = new Shooter();
+    shooterAlign = new ShooterAlign();
     oi = new OI();
 
     /* Set Default Commands for Subsystems */

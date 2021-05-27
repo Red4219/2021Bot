@@ -4,16 +4,28 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
 
+/*
+ * This command moves the revolver clockwise and counterclockwise
+ * 
+ * Author: Francisco Fabregat
+ */
 public class MoveRevolver extends CommandBase {
     
+    /* Initialize variables */
     boolean moveCw = false;
 
+    /*
+     * Declares public function MoveRevolver with parameter of whether the revolver will move clockwise
+     */
     public MoveRevolver(boolean cw) {
         addRequirements(Robot.revolver);
 
         moveCw = cw;
     }
 
+    /*
+     * Function running periodically as long as isFinished() returns false
+     */
     public void execute() {
         if (moveCw) {
             Robot.revolver.rotateCW();
@@ -30,6 +42,9 @@ public class MoveRevolver extends CommandBase {
         Robot.revolver.stop();
     }
 
+    /*
+     * Determines when to end the command
+     */
     @Override
     public boolean isFinished() {
         if (moveCw) {

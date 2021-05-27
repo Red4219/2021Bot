@@ -4,6 +4,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -31,6 +32,7 @@ public class RobotMap {
   /* Initialize encoders */
   public static CANEncoder leftDriveEncoder;
   public static CANEncoder rightDriveEncoder;
+  public static CANEncoder shooterAlignEncoder;
 
   /* Initialize motors */
   public static CANSparkMax revolverMotor;
@@ -38,6 +40,10 @@ public class RobotMap {
   public static CANSparkMax shooterAlignMotor;
   public static CANSparkMax intakeMotor;
   public static CANSparkMax intakeLiftMotor;
+
+  /* Initialize limit switches */
+  public static DigitalInput intakeUpSwitch;
+  public static DigitalInput intakeDownSwitch;
 
   /*
    * Initialize all components
@@ -70,12 +76,17 @@ public class RobotMap {
     /* Define encoders */
     leftDriveEncoder = MiddleLeftMotor.getEncoder();
     rightDriveEncoder = MiddleRightMotor.getEncoder();
+    shooterAlignEncoder = shooterAlignMotor.getEncoder();
 
-   /* Define SPARK MAX with CAN id */
-   revolverMotor = new CANSparkMax(7, MotorType.kBrushless);
-   shooterMotor = new CANSparkMax(8, MotorType.kBrushed);
-   shooterAlignMotor = new CANSparkMax(9, MotorType.kBrushless);
-   intakeMotor = new CANSparkMax(10, MotorType.kBrushless);
-   intakeLiftMotor = new CANSparkMax(11, MotorType.kBrushless);
+    /* Define SPARK MAX with CAN id */
+    revolverMotor = new CANSparkMax(7, MotorType.kBrushless);
+    shooterMotor = new CANSparkMax(8, MotorType.kBrushed);
+    shooterAlignMotor = new CANSparkMax(9, MotorType.kBrushless);
+    intakeMotor = new CANSparkMax(10, MotorType.kBrushless);
+    intakeLiftMotor = new CANSparkMax(11, MotorType.kBrushless);
+
+    /* Define limit switches */
+    intakeUpSwitch = new DigitalInput(0);
+    intakeDownSwitch = new DigitalInput(1);
   }
 }

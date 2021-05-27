@@ -26,6 +26,9 @@ public final class Config {
 
     /* Configuration for shooter */
     public static double shooterSpeed = 0.9;
+    public static double shootTurnTolerance = 2.0;
+    public static double shootAlignSpeed = 0.2;
+    public static double shootAlignTolerance = 10.0;
 
     /* Limelight variables */
     public static double limelightHeight = 19.875; //inches

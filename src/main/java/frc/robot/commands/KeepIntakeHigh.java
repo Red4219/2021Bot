@@ -3,34 +3,30 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /*
- * This command moves the intake to both move balls into the robot or out of the intake
+ * This command keeps the intake in its high position
  * 
  * Author: Francisco Fabregat
  */
-public class MoveIntake extends CommandBase {
-
-    /* Initialize variables */
-    boolean moveIn = false;
+public class KeepIntakeHigh extends CommandBase {
 
     /*
-     * Declares public function MoveIntake with parameter of whether the intake will move the balls in
+     * Declares public function KeepIntakeHigh
      */
-    public MoveIntake(boolean in) {
+    public KeepIntakeHigh() {
         addRequirements(Robot.intake);
-
-        moveIn = in;
     }
 
     /*
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (moveIn) {
-            Robot.intake.intake();
+        if (!RobotMap.intakeUpSwitch.get()) {
+            Robot.intake.raise();
         } else {
-            Robot.intake.moveOut();
+            Robot.intake.stopLift();
         }
     }
 
@@ -47,11 +43,7 @@ public class MoveIntake extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (moveIn) {
-            return !OI.intakeButton.get();
-        } else {
-            return !OI.intakeButton.get();
-        }
+        return !OI.keepIntakeHighButton.get();
     }
 
     /*
