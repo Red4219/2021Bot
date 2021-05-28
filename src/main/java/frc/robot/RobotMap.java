@@ -73,11 +73,6 @@ public class RobotMap {
     /* Define robotDrive as a DifferentialDrive for drivetrain */
     robotDrive = new DifferentialDrive(leftGroup, rightGroup);
 
-    /* Define encoders */
-    leftDriveEncoder = MiddleLeftMotor.getEncoder();
-    rightDriveEncoder = MiddleRightMotor.getEncoder();
-    shooterAlignEncoder = shooterAlignMotor.getEncoder();
-
     /* Define SPARK MAX with CAN id */
     revolverMotor = new CANSparkMax(7, MotorType.kBrushless);
     shooterMotor = new CANSparkMax(8, MotorType.kBrushed);
@@ -85,8 +80,13 @@ public class RobotMap {
     intakeMotor = new CANSparkMax(10, MotorType.kBrushless);
     intakeLiftMotor = new CANSparkMax(11, MotorType.kBrushless);
 
+    /* Define encoders */
+    leftDriveEncoder = MiddleLeftMotor.getEncoder();
+    rightDriveEncoder = MiddleRightMotor.getEncoder();
+    shooterAlignEncoder = shooterAlignMotor.getEncoder();
+
     /* Define limit switches */
-    intakeUpSwitch = new DigitalInput(0);
-    intakeDownSwitch = new DigitalInput(1);
+    intakeUpSwitch = new DigitalInput(1);
+    intakeDownSwitch = new DigitalInput(2);
   }
 }

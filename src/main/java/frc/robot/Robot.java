@@ -71,6 +71,9 @@ public class Robot extends TimedRobot {
 
     /* Select default autonomous mode */
     dashboard.setAutonomous(0);
+
+    /* Reset shooter align encoder */
+    shooterAlign.reset();
   }
 
   /*
@@ -88,6 +91,8 @@ public class Robot extends TimedRobot {
     /* Send remaining time to Dashboard */
     dashboard.setTime(DriverStation.getInstance().getMatchTime());
     
+    dashboard.setShootAdjustEncoder(shooterAlign.getPosition());
+
     /* Send distance to dashboard ONLY if tape is detected by the Limelight */
     if (limelight.hasTarget()) {
       dashboard.setDistance(limelight.getDistance());
@@ -151,7 +156,15 @@ public class Robot extends TimedRobot {
    * This function is executed periodically when in teleop mode
    */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    dashboard.setLeftMotorPower(RobotMap.MiddleLeftMotor.get());
+    dashboard.setRightMotorPower(RobotMap.MiddleRightMotor.get());
+    dashboard.setIntakeMotorPower(RobotMap.intakeMotor.get());
+    dashboard.setIntakeLiftMotorPower(RobotMap.intakeLiftMotor.get());
+    dashboard.setShooterMotorPower(RobotMap.shooterMotor.get());
+    dashboard.setRevolverMotorPower(RobotMap.revolverMotor.get());
+    dashboard.setAdjusterMotorPower(RobotMap.shooterAlignMotor.get());
+  }
 
   /*
    * This function is executed only once when the robot changes into test mode

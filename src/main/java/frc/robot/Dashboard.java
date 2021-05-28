@@ -25,7 +25,16 @@ public class Dashboard {
     NetworkTableEntry cameraActive = table.getEntry("CameraActive");
     NetworkTableEntry vision = table.getEntry("vision");
     NetworkTableEntry time = table.getEntry("time");
+    NetworkTableEntry shooterRPM = table.getEntry("shooterRPM");
     NetworkTableEntry newTargetDistance = table.getEntry("targetDistance");
+    NetworkTableEntry leftDriveMotor = table.getEntry("leftDriveMotor");
+    NetworkTableEntry rightDriveMotor = table.getEntry("rightDriveMotor");
+    NetworkTableEntry intakeMotor = table.getEntry("intakeMotor");
+    NetworkTableEntry intakeLiftMotor = table.getEntry("intakeLiftMotor");
+    NetworkTableEntry shooterMotor = table.getEntry("shooterMotor");
+    NetworkTableEntry revolverMotor = table.getEntry("revolverMotor");
+    NetworkTableEntry adjusterMotor = table.getEntry("adjusterMotor");
+    NetworkTableEntry shootAdjustEncoder =  table.getEntry("shootAdjustEncoder");
 
     /* Send battery voltage to NetworkTables */
     public void setBattery(final Double voltage) {
@@ -62,6 +71,10 @@ public class Dashboard {
         vision.setDouble(data);
     }
 
+    public void setShooterRPM(final double rpm) {
+        shooterRPM.setDouble(rpm);
+    }
+
     /* Send time to NetworkTables */
     public void setTime(final double seconds) {
         if (seconds == -1.0) {
@@ -76,5 +89,38 @@ public class Dashboard {
     /* Send calculated distance from robot to target by Limelight */
     public void setDistance(final double distance) {
         newTargetDistance.setDouble(distance);
+    }
+
+    public void setShootAdjustEncoder(final double value) {
+        System.out.println("Setting encoder to: "+value);
+        shootAdjustEncoder.setDouble(value);
+    }
+
+    public void setLeftMotorPower(final double motorPower) {
+        leftDriveMotor.setDouble(motorPower);
+    }
+
+    public void setRightMotorPower(final double motorPower) {
+        rightDriveMotor.setDouble(motorPower);
+    }
+
+    public void setIntakeMotorPower(final double motorPower) {
+        intakeMotor.setDouble(motorPower);
+    }
+
+    public void setIntakeLiftMotorPower(final double motorPower) {
+        intakeLiftMotor.setDouble(motorPower);
+    }
+
+    public void setShooterMotorPower(final double motorPower) {
+        shooterMotor.setDouble(motorPower);
+    }
+
+    public void setRevolverMotorPower(final double motorPower) {
+        revolverMotor.setDouble(motorPower);
+    }
+
+    public void setAdjusterMotorPower(final double motorPower) {
+        adjusterMotor.setDouble(motorPower);
     }
 }

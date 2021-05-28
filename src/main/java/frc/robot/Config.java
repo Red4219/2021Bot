@@ -18,22 +18,22 @@ public final class Config {
 
     /* Configuration for intake */
     public static double intakeSpeed = 0.7;
-    public static double intakeLiftSpeed = 0.4;
+    public static double intakeLiftSpeed = 0.2;
     public static double intakeDownSpeed = 0.1;
 
     /* Configuration for revolver */
     public static double revolverSpeed = 0.5;
 
     /* Configuration for shooter */
-    public static double shooterSpeed = 0.9;
-    public static double shootTurnTolerance = 2.0;
+    public static double shooterSpeed = 1;
+    public static double shootTurnTolerance = 1.0;
     public static double shootAlignSpeed = 0.2;
     public static double shootAlignTolerance = 10.0;
 
     /* Limelight variables */
-    public static double limelightHeight = 19.875; //inches
+    public static double limelightHeight = 19.5625; //inches
     public static double targetHeight = 98.19; //inches
-    public static double limelightAngle = 24.0; //Degrees
+    public static double limelightAngle = 32.4; //Degrees
 
     /* Define robot width */
     public static double robotWidth = 0.0;

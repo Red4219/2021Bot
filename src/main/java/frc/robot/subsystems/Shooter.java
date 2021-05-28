@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
      * Turn on shooter
      */
     public void on() {
-        shooterMotor.set(Config.shooterSpeed);
+        shooterMotor.set(-Config.shooterSpeed);
     }
 
     /*
