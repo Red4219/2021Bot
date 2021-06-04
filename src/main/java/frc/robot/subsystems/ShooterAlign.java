@@ -59,7 +59,33 @@ public class ShooterAlign extends SubsystemBase {
     /*
      * Calculate the posiiton of the shooter aligner based on distance to target
      */
+    private double numLerp(double a, double b, double c) {
+        return a + (b - a) * c;
+    }
+    private double[] vectorLerp(double[] a , double[] b ,double t) {
+        double bSubA[] = {b[0]-a[0],b[1]-a[1]};
+        double aPlusSub[] = {a[0]+bSubA[0],a[1]+bSubA[1]};
+        double result[] = {aPlusSub[0]*t,aPlusSub[1]*t};
+        return result;
+        
+    }
+    private double[] cubicBezier(double t, double[] p0, double[] p1, double[] p2, double[] p3) {
+        double l1[] = vectorLerp(p0, p1, t);
+	    double l2[] = vectorLerp(p1, p2, t);
+	    double l3[] = vectorLerp(p2, p3, t);
+    	double a[] = vectorLerp(l1, l2, t);
+    	double b[] = vectorLerp(l2, l3, t);
+    	double cubic[] = vectorLerp(a, b, t);
+	    return cubic;
+    }
     public double getTargetPosition(double distance) {
-        return 0.0;
+        double whole = (147.2 - distance);
+        double p0[] = {48,0.1};
+        double p1[] = {103.5,4};
+        double p2[] = {125.7,13.5};
+        double p3[] = {142.7,0};
+
+        double result[] = cubicBezier((distance-48)/whole, p0, p1, p2, p3);
+        return result[1];
     }
 }
