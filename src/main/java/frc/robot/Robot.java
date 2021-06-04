@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
   private int mode = 0;
 
   /* Initialize and define autonomous modes list */
-  String[] autoList = { "Move Straight", "Shoot and Move" };
+  String[] autoList = { "Move Straight"};
 
   /* Initialize Dashboard */
   public static Dashboard dashboard = new Dashboard();
@@ -164,6 +164,8 @@ public class Robot extends TimedRobot {
     dashboard.setShooterMotorPower(RobotMap.shooterMotor.get());
     dashboard.setRevolverMotorPower(RobotMap.revolverMotor.get());
     dashboard.setAdjusterMotorPower(RobotMap.shooterAlignMotor.get());
+  
+    System.out.println("Bottom Switch: "+RobotMap.intakeDownSwitch.get());
   }
 
   /*

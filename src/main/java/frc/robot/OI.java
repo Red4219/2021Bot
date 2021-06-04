@@ -3,9 +3,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoAlign;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.LiftIntake;
 import frc.robot.commands.ManualShoot;
 import frc.robot.commands.MoveIntake;
+import frc.robot.commands.MoveRevolver;
 import frc.robot.commands.MoveShooterAdjust;
 
 /*
@@ -38,9 +40,9 @@ public class OI {
     /* Assign button ids to buttons */
     raiseIntakeButton = new JoystickButton(driver, 6);
     lowerIntakeButton = new JoystickButton(driver, 5);
-    intakeButton = new JoystickButton(driver, 3);
-    revolverButton = new JoystickButton(driver, 9);
-    autoAlignButton = new JoystickButton(driver, 2);
+    intakeButton = new JoystickButton(driver, 9);
+    revolverButton = new JoystickButton(driver, 2);
+    autoAlignButton = new JoystickButton(driver, 3);
     keepIntakeHighButton = new JoystickButton(driver, 8);
     shootButton = new JoystickButton(driver, 7);
     shooterAdjustUpButton = new JoystickButton(driver, 4);
@@ -50,12 +52,15 @@ public class OI {
     
     // TEMPORARILY DISABLED COMMANDS FOR SAFETY WHILE SENSORS ARE INSTALLED
 
+    lowerIntakeButton.whenPressed(new LiftIntake(false));
     raiseIntakeButton.whenPressed(new LiftIntake(true));
     shooterAdjustUpButton.whenPressed(new MoveShooterAdjust(true));
     shooterAdjustDownButton.whenPressed(new MoveShooterAdjust(false));
     shootButton.whenPressed(new ManualShoot());
+    //shootButton.whenPressed(new AutoShoot());
     autoAlignButton.whenPressed(new AutoAlign());
-    /*lowerIntakeButton.whenPressed(new LiftIntake(false));
+    revolverButton.whenPressed(new MoveRevolver(false));
+    /*
     intakeButton.whenPressed(new MoveIntake(true));*/
   }
 }

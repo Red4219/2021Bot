@@ -18,6 +18,11 @@ public class ManualShoot extends CommandBase {
         addRequirements(Robot.shooter);
     }
 
+    public void initialize() {
+        Robot.limelight.setVision();
+        Robot.limelight.ledOn();
+    }
+
     /*
      * Function running periodically as long as isFinished() returns false
      */
@@ -31,6 +36,8 @@ public class ManualShoot extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.shooter.stop();
+        //Robot.limelight.setDrive();
+        //Robot.limelight.ledOff();
     }
 
     /*

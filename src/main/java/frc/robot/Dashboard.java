@@ -92,7 +92,6 @@ public class Dashboard {
     }
 
     public void setShootAdjustEncoder(final double value) {
-        System.out.println("Setting encoder to: "+value);
         shootAdjustEncoder.setDouble(value);
     }
 
