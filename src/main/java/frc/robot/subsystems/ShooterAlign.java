@@ -79,13 +79,16 @@ public class ShooterAlign extends SubsystemBase {
 	    return cubic;
     }
     public double getTargetPosition(double distance) {
-        double whole = (147.2 - distance);
-        double p0[] = {48,0.1};
-        double p1[] = {103.5,4};
-        double p2[] = {125.7,13.5};
-        double p3[] = {142.7,0};
+        if (distance >= 48 && distance <= 147.2) {
+            double whole = (147.2 - distance);
+            double p0[] = {48,0.1};
+            double p1[] = {103.5,4};
+            double p2[] = {125.7,13.5};
+            double p3[] = {142.7,0};
 
-        double result[] = cubicBezier((distance-48)/whole, p0, p1, p2, p3);
-        return result[1];
+            double result[] = cubicBezier((distance-48)/whole, p0, p1, p2, p3);
+            return result[1];
+        }
+        return 0.0;
     }
 }
