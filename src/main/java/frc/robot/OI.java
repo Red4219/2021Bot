@@ -19,6 +19,7 @@ public class OI {
 
   /* Define joysticks and controllers */
   public static Joystick driver;
+  public static Joystick operator;
 
   /* Define joystick buttons */
   public static JoystickButton raiseIntakeButton;
@@ -36,11 +37,12 @@ public class OI {
 
     /* Assign joystick id to joystick */
     driver = new Joystick(1);
+    operator = new Joystick(0);
 
     /* Assign button ids to buttons */
     raiseIntakeButton = new JoystickButton(driver, 6);
     lowerIntakeButton = new JoystickButton(driver, 5);
-    intakeButton = new JoystickButton(driver, 9);
+    intakeButton = new JoystickButton(operator, 3);
     revolverButton = new JoystickButton(driver, 2);
     autoAlignButton = new JoystickButton(driver, 3);
     keepIntakeHighButton = new JoystickButton(driver, 8);
@@ -60,7 +62,7 @@ public class OI {
     //shootButton.whenPressed(new AutoShoot());
     autoAlignButton.whenPressed(new AutoAlign());
     revolverButton.whenPressed(new MoveRevolver(false));
-    /*
-    intakeButton.whenPressed(new MoveIntake(true));*/
+    
+    intakeButton.whenPressed(new MoveIntake(true));
   }
 }
