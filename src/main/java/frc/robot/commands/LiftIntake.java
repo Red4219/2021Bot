@@ -27,12 +27,19 @@ public class LiftIntake extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
+        //System.out.println("execute called");
+        System.out.println("upswitch: " + RobotMap.intakeUpSwitch.get());
+        System.out.println("downswitch: " + RobotMap.intakeDownSwitch.get());
         if (moveUp) {
+            //System.out.println("raise moveUp:" + moveUp);
+            //System.out.println("upswitch: " + RobotMap.intakeUpSwitch.get());
             if (!RobotMap.intakeUpSwitch.get()) {
                 Robot.intake.raise();
             }
         } else {
+            //System.out.println("downswitch: " + RobotMap.intakeDownSwitch.get());
             if (!RobotMap.intakeDownSwitch.get()) {
+                //System.out.println("lower moveUp:" + moveUp);
                 Robot.intake.lower();
             }
         }

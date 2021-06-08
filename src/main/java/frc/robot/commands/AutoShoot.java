@@ -70,7 +70,8 @@ public class AutoShoot extends CommandBase {
                         }
                     } else {
                         Robot.shooterAlign.stop();
-                        Robot.revolver.rotateCW();
+                        //Robot.revolver.rotateCW();
+                        Robot.revolver.rotateCCW();
                     }
                 }
             } else {

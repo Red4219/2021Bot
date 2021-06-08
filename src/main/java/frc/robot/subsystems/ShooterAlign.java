@@ -79,6 +79,7 @@ public class ShooterAlign extends SubsystemBase {
 	    return cubic;
     }
     public double getTargetPosition(double distance) {
+        System.out.println("HELLO");
         if (distance >= 48 && distance <= 147.2) {
             double whole = (147.2 - distance);
             double p0[] = {48,0.1};
@@ -87,7 +88,7 @@ public class ShooterAlign extends SubsystemBase {
             double p3[] = {142.7,0};
 
             double result[] = cubicBezier((distance-48)/whole, p0, p1, p2, p3);
-            return result[1];
+            System.out.println(result[1]);
         }
         return 0.0;
     }

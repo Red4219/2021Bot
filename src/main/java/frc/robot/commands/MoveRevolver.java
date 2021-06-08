@@ -29,7 +29,9 @@ public class MoveRevolver extends CommandBase {
     public void execute() {
         if (moveCw) {
             Robot.revolver.rotateCW();
+            System.out.println("CW");
         } else {
+            System.out.println("CCW");
             Robot.revolver.rotateCCW();
         }
     }
@@ -48,9 +50,9 @@ public class MoveRevolver extends CommandBase {
     @Override
     public boolean isFinished() {
         if (moveCw) {
-            return !OI.revolverButton.get();
+            return !OI.revolverCWButton.get();
         } else {
-            return !OI.revolverButton.get();
+            return !OI.revolverCCWButton.get();
         }
     }
 

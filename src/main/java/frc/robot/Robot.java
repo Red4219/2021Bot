@@ -165,7 +165,7 @@ public class Robot extends TimedRobot {
     dashboard.setRevolverMotorPower(RobotMap.revolverMotor.get());
     dashboard.setAdjusterMotorPower(RobotMap.shooterAlignMotor.get());
   
-    System.out.println("Bottom Switch: "+RobotMap.intakeDownSwitch.get());
+    //System.out.println("Bottom Switch: "+RobotMap.intakeDownSwitch.get());
   }
 
   /*

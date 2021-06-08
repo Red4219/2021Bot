@@ -13,7 +13,7 @@ public final class Config {
     public static double moveMaxSpeed = 1.0;
     public static double turnMaxSpeed = 0.95;
     public static double turnAccel = 0.075;
-    public static double driveTargetAdjustSpeed = 0.3;
+    public static double driveTargetAdjustSpeed = 0.2;
     public static double driveManualAdjustSpeed = 0.3;
 
     /* Configuration for intake */
@@ -22,7 +22,7 @@ public final class Config {
     public static double intakeDownSpeed = 0.1;
 
     /* Configuration for revolver */
-    public static double revolverSpeed = 0.1;
+    public static double revolverSpeed = 0.2;
 
     /* Configuration for shooter */
     public static double shooterSpeed = 1;

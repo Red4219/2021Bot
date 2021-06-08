@@ -87,6 +87,6 @@ public class RobotMap {
 
     /* Define limit switches */
     intakeUpSwitch = new DigitalInput(1);
-    intakeDownSwitch = new DigitalInput(0);
+    intakeDownSwitch = new DigitalInput(2);
   }
 }
