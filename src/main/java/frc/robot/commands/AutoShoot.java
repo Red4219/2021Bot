@@ -19,7 +19,7 @@ public class AutoShoot extends CommandBase {
     public AutoShoot() {
         addRequirements(Robot.driveTrain);
         addRequirements(Robot.intake);
-        addRequirements(Robot.revolver);
+        //addRequirements(Robot.revolver);
         addRequirements(Robot.shooter);
         addRequirements(Robot.shooterAlign);
     }
@@ -44,7 +44,7 @@ public class AutoShoot extends CommandBase {
         if (!RobotMap.intakeDownSwitch.get()) {
             Robot.intake.lower();
             Robot.driveTrain.stopTank();
-            Robot.revolver.stop();
+            //Robot.revolver.stop();
             Robot.shooterAlign.stop();
         } else {
             Robot.intake.stop();
@@ -61,7 +61,7 @@ public class AutoShoot extends CommandBase {
                     double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
 
                     if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
-                        Robot.revolver.stop();
+                        //Robot.revolver.stop();
 
                         if (Robot.shooterAlign.getPosition() > alignTarget) {
                             Robot.shooterAlign.moveDown();
@@ -71,7 +71,7 @@ public class AutoShoot extends CommandBase {
                     } else {
                         Robot.shooterAlign.stop();
                         //Robot.revolver.rotateCW();
-                        Robot.revolver.rotateCCW();
+                        //Robot.revolver.rotateCW();
                     }
                 }
             } else {
@@ -88,7 +88,7 @@ public class AutoShoot extends CommandBase {
     public void end(boolean interrupted) {
         Robot.driveTrain.stopTank();
         Robot.intake.stopLift();
-        Robot.revolver.stop();
+        //Robot.revolver.stop();
         Robot.shooter.stop();
         Robot.shooterAlign.stop();
         Robot.limelight.setDrive();
