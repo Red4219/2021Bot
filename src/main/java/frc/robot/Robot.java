@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.paths.Straight;
+import frc.robot.autonomous.paths.StraightAndShoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
@@ -39,7 +40,7 @@ public class Robot extends TimedRobot {
   private int mode = 0;
 
   /* Initialize and define autonomous modes list */
-  String[] autoList = { "Move Straight"};
+  String[] autoList = { "Move Straight", "DO NOT SELECT (Yet)"};
 
   /* Initialize Dashboard */
   public static Dashboard dashboard = new Dashboard();
@@ -125,6 +126,8 @@ public class Robot extends TimedRobot {
     /* Set autonomousCommand to the right command according to the mode variable */
     if (mode == 0) {
       autonomousCommand = (Command) new Straight();
+    } else if (mode == 1) {
+      autonomousCommand = (Command) new StraightAndShoot();
     } else {
       autonomousCommand = (Command) new Straight();
     }
