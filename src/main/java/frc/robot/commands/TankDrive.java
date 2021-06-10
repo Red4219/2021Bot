@@ -28,6 +28,10 @@ public class TankDrive extends CommandBase {
         double leftAxis = OI.driver.getRawAxis(1);
         double rightAxis = OI.driver.getRawAxis(5);
 
+        // Define Trigger
+        double linearForwardMovement = OI.driver.getRawAxis(3) * 0.25; // Right trigger 
+        double linearBackwardMovement = OI.driver.getRawAxis(2) * 0.25; // Left trigger 
+        //
         double leftSpeed = leftAxis;
         double rightSpeed = rightAxis;
 
@@ -39,22 +43,34 @@ public class TankDrive extends CommandBase {
             rightSpeed = 0;
         }
 
+
+        // Linear Drive
+        if (linearForwardMovement > 0.04) {
+            rightSpeed = linearForwardMovement
+            leftSpeed = linearForwardMovement
+        } else if (linearBackwardMovment > 0.04) {
+            rightSpeed = -linearBackwardMovement
+            leftSpeed = -linearBackwardMovement
+        }
+
         /* Set left maximum speed */
         if (Math.abs(leftSpeed) >= Config.moveMaxSpeed) {
-            if (leftSpeed > 0) {
+            leftSpeed = Config.moveMaxSpeed * Math.signum(leftSpeed);
+            /*if (leftSpeed > 0) {
                 leftSpeed = Config.moveMaxSpeed;
             } else {
                 leftSpeed = Config.moveMaxSpeed * -1;
-            }
+            }*/
         }
 
         /* Set right maximum speed */
         if (Math.abs(rightSpeed) >= Config.moveMaxSpeed) {
-            if (rightSpeed > 0) {
+            rightSpeed = Config.moveMaxSpeed * Math.signum(rightSpeed);
+            /*if (rightSpeed > 0) {
                 rightSpeed = Config.moveMaxSpeed;
             } else {
                 rightSpeed = Config.moveMaxSpeed * -1;
-            }
+            }*/
         }
 
         if (leftSpeed == 0.0 && rightSpeed == 0.0) {
