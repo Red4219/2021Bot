@@ -41,7 +41,12 @@ public class ShooterAlign extends SubsystemBase {
     public void moveUp() {
         shooterAlignMotor.set(Config.shootAlignSpeed);
     }
-
+    /*
+     *
+     */ 
+    public void setMotor(double rawSpeed) {
+        shooterAlignMotor.set(Config.shootAlignSpeed*rawSpeed);
+    }
     /*
      * Move shooter aligner down
      */
