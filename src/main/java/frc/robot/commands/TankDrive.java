@@ -46,11 +46,11 @@ public class TankDrive extends CommandBase {
 
         // Linear Drive
         if (linearForwardMovement > 0.04) {
-            rightSpeed = linearForwardMovement
-            leftSpeed = linearForwardMovement
-        } else if (linearBackwardMovment > 0.04) {
-            rightSpeed = -linearBackwardMovement
-            leftSpeed = -linearBackwardMovement
+            rightSpeed = linearForwardMovement;
+            leftSpeed = linearForwardMovement;
+        } else if (linearBackwardMovement > 0.04) {
+            rightSpeed = -linearBackwardMovement;
+            leftSpeed = -linearBackwardMovement;
         }
 
         /* Set left maximum speed */
