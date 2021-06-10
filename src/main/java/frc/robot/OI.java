@@ -75,8 +75,8 @@ public class OI {
 
     lowerIntakeButton.whenPressed(new LiftIntake(false));
     raiseIntakeButton.whenPressed(new LiftIntake(true));
-    shooterAdjustUpButton.whenPressed(new MoveShooterAdjust(true));
-    shooterAdjustDownButton.whenPressed(new MoveShooterAdjust(false));
+    //shooterAdjustUpButton.whenPressed(new MoveShooterAdjust(true));
+    //shooterAdjustDownButton.whenPressed(new MoveShooterAdjust(false));
     //shootButton.whenPressed(new ManualShoot());
     shootButton.whenPressed(new AutoShoot());
     autoAlignButton.whenPressed(new AutoAlign());
