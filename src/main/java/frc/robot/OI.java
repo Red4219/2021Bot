@@ -45,7 +45,7 @@ public class OI {
 
 
     raiseIntakeButton = new JoystickButton(driver, 4);
-    lowerIntakeButton = new JoystickButton(driver, 3);
+    lowerIntakeButton = new JoystickButton(driver, 1);
     intakeButton = new JoystickButton(driver, 6);
     //revolverButton = new JoystickButton(driver, 2);
     //autoAlignButton = new JoystickButton(driver, 3);
