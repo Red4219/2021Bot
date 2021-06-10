@@ -36,6 +36,12 @@ public class Revolver extends SubsystemBase {
     }
 
     /*
+     * Rotate revolver from raw input
+     */
+    public void rotate(double factor) {
+        revolverMotor.set(factor * Config.revolverSpeed);
+    }
+    /*
      * Stop revolver
      */
     public void stop() {

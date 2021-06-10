@@ -17,22 +17,27 @@ public class MoveRevolver extends CommandBase {
     /*
      * Declares public function MoveRevolver with parameter of whether the revolver will move clockwise
      */
-    public MoveRevolver(boolean cw) {
+    public MoveRevolver() {
         addRequirements(Robot.revolver);
 
-        moveCw = cw;
+        //moveCw = cw;
     }
 
     /*
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (moveCw) {
+        double rotateAmount = OI.operator.getRawAxis(4);
+        if (Math.abs(rotateAmount) > 0.1) {
+            Robot.revolver.rotate(rotateAmount);
+        } else if (OI.revolverCWButton.get()) {
             Robot.revolver.rotateCW();
             System.out.println("CW");
-        } else {
+        } else if(OI.revolverCCWButton.get()) {
             System.out.println("CCW");
             Robot.revolver.rotateCCW();
+        } else {
+            Robot.revolver.stop();
         }
     }
 
@@ -49,11 +54,13 @@ public class MoveRevolver extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (moveCw) {
+        return false;
+        /*if (moveCw) {
             return !OI.revolverCWButton.get();
         } else {
             return !OI.revolverCCWButton.get();
-        }
+        }*/
+        
     }
 
     /*

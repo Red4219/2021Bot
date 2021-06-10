@@ -13,6 +13,7 @@ import frc.robot.autonomous.paths.Straight;
 import frc.robot.autonomous.paths.StraightAndShoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.MoveShooterAdjust;
+import frc.robot.commands.MoveRevolver;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Revolver;
@@ -56,7 +57,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     /* Initialize RobotMap */
     RobotMap.init();
-
     /* Define OI and Subsystems */
     driveTrain = new Drive();
     intake = new Intake();
@@ -68,6 +68,8 @@ public class Robot extends TimedRobot {
     /* Set Default Commands for Subsystems */
     driveTrain.setDefaultCommand(new TankDrive());
     shooterAlign.setDefaultCommand(new MoveShooterAdjust());
+    revolver.setDefaultCommand(new MoveRevolver());
+
     /* Push autonomous list to Dashboard */
     dashboard.setAutonomousList(autoList);
 
