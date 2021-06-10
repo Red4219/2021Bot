@@ -25,6 +25,7 @@ public class OI {
   public static JoystickButton raiseIntakeButton;
   public static JoystickButton lowerIntakeButton;
   public static JoystickButton intakeButton;
+  public static JoystickButton reverseIntakeButton;
   public static JoystickButton revolverCWButton;
   public static JoystickButton autoAlignButton;
   public static JoystickButton keepIntakeHighButton;
@@ -47,6 +48,7 @@ public class OI {
     raiseIntakeButton = new JoystickButton(driver, 4);
     lowerIntakeButton = new JoystickButton(driver, 3);
     intakeButton = new JoystickButton(driver, 6);
+    reverseIntakeButton = new JoystickButton(driver, 6);
     //revolverButton = new JoystickButton(driver, 2);
     //autoAlignButton = new JoystickButton(driver, 3);
     autoAlignButton = new JoystickButton(driver, 5);
@@ -83,5 +85,6 @@ public class OI {
     revolverCWButton.whenPressed(new MoveRevolver(true));
     revolverCCWButton.whenPressed(new MoveRevolver(false));
     intakeButton.whenPressed(new MoveIntake(true));
+    reverseIntakeButton.whenPressed(new MoveIntake(false));
   }
 }
