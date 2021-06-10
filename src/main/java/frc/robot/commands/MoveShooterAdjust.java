@@ -27,10 +27,15 @@ public class MoveShooterAdjust extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (moveUp) {
-            Robot.shooterAlign.moveUp();
+        double forwardMove = OI.operator.getRawAxis(3); // Right trigger 
+        double backwardMove = OI.operator.getRawAxis(2); // Left trigger 
+        //double moveSpeed = OI.driver.getRawAxis(5); // right joystick 
+        if (forwardMove > 0.2) {
+            Robot.shooterAlign.setMotor(forwardMove);
+        } else if (backwardMove > 0.2)  {
+            Robot.shooterAlign.setMotor(-backwardMove);
         } else {
-            Robot.shooterAlign.moveDown();
+            Robot.shooterAlign.setMotor(0.0);
         }
     }
 
@@ -47,11 +52,12 @@ public class MoveShooterAdjust extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (moveUp) {
+        /*if (moveUp) {
             return !OI.shooterAdjustUpButton.get();
         } else {
             return !OI.shooterAdjustDownButton.get();
-        }
+        }*/
+        return false
     }
 
     /*

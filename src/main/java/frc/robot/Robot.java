@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
 
     /* Set Default Commands for Subsystems */
     driveTrain.setDefaultCommand(new TankDrive());
-
+    shooterAlign.setDefaultCommand(new MoveShooterAdjust());
     /* Push autonomous list to Dashboard */
     dashboard.setAutonomousList(autoList);
 
