@@ -9,7 +9,7 @@ import frc.robot.Robot;
  * 
  * Author: Francisco Fabregat
  */
-public class StraightDrive extends CommandBase {
+public class Shoot extends CommandBase {
 
     /* Initialize variables */
     boolean forwardMovement;
@@ -24,7 +24,7 @@ public class StraightDrive extends CommandBase {
     /*
      * Declares public function that takes direction and distance in feet and inches
      */
-    public StraightDrive(boolean forward, double userFeet, double userInches, boolean intake) {
+    public Shoot(boolean forward, double userFeet, double userInches, boolean intake) {
 
         /* Require the necessary subsystems */
         addRequirements(Robot.revolver);

@@ -16,8 +16,8 @@ public class StraightAndShoot extends SequentialCommandGroup {
     public StraightAndShoot() {
         addCommands(
             /* Drives forward for 6ft 0in */
-            new StraightDrive(true, 6, 0, false);
-            console.log("YEEEEE");
+            new StraightDrive(true, 6, 0, false)
+            //System.out.println("YEEEEE");
         );
     }
 
