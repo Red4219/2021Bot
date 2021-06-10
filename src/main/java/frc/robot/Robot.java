@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.paths.Straight;
 import frc.robot.autonomous.paths.StraightAndShoot;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.MoveShooterAdjust;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Revolver;

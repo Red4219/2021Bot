@@ -17,10 +17,10 @@ public class MoveShooterAdjust extends CommandBase {
     /*
      * Declares public function MoveShooterAdjust with parameter of whether to move the adjuster up or down
      */
-    public MoveShooterAdjust(boolean up) {
+    public MoveShooterAdjust() {
         addRequirements(Robot.shooterAlign);
 
-        moveUp = up;
+        //moveUp = up;
     }
 
     /*
@@ -57,7 +57,7 @@ public class MoveShooterAdjust extends CommandBase {
         } else {
             return !OI.shooterAdjustDownButton.get();
         }*/
-        return false
+        return false;
     }
 
     /*
