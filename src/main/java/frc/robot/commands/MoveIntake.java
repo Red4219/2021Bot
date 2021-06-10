@@ -50,7 +50,7 @@ public class MoveIntake extends CommandBase {
         if (moveIn) {
             return !OI.intakeButton.get();
         } else {
-            return !OI.intakeButton.get();
+            return !OI.reverseIntakeButton.get();
         }
     }
 
