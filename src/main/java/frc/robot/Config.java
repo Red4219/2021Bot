@@ -22,7 +22,7 @@ public final class Config {
     public static double intakeDownSpeed = 0.1;
 
     /* Configuration for revolver */
-    public static double revolverSpeed = 0.2;
+    public static double revolverSpeed = 0.12;
 
     /* Configuration for shooter */
     public static double shooterSpeed = 1;
