@@ -59,12 +59,12 @@ public class RobotMap {
     BackRightMotor = new CANSparkMax(1, MotorType.kBrushless);
 
     /* Set ramp rate for drive motors to decrease current drawn and prevent browning out */
-    FrontLeftMotor.setOpenLoopRampRate(0.5);
-    MiddleLeftMotor.setOpenLoopRampRate(0.5);
-    BackLeftMotor.setOpenLoopRampRate(0.5);
-    FrontRightMotor.setOpenLoopRampRate(0.5);
-    MiddleRightMotor.setOpenLoopRampRate(0.5);
-    BackRightMotor.setOpenLoopRampRate(0.5);
+    FrontLeftMotor.setOpenLoopRampRate(0.7);
+    MiddleLeftMotor.setOpenLoopRampRate(0.7);
+    BackLeftMotor.setOpenLoopRampRate(0.7);
+    FrontRightMotor.setOpenLoopRampRate(0.7);
+    MiddleRightMotor.setOpenLoopRampRate(0.7);
+    BackRightMotor.setOpenLoopRampRate(0.7);
     
     /* Define SpeedControllerGroups for DifferentialDrive */
     leftGroup = new SpeedControllerGroup(FrontLeftMotor, MiddleLeftMotor, BackLeftMotor);
