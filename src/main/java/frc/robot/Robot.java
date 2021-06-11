@@ -37,6 +37,9 @@ public class Robot extends TimedRobot {
   public static Revolver revolver;
   public static Shooter shooter;
   public static ShooterAlign shooterAlign;
+  
+  //
+  private double lastPeriodTime;
 
   /* Define default autonomous mode id */
   private int mode = 0;
@@ -64,7 +67,7 @@ public class Robot extends TimedRobot {
     shooter = new Shooter();
     shooterAlign = new ShooterAlign();
     oi = new OI();
-
+    lastPeriodTime = System.currentTimeMillis()/1000;
     /* Set Default Commands for Subsystems */
     driveTrain.setDefaultCommand(new TankDrive());
     shooterAlign.setDefaultCommand(new MoveShooterAdjust());
@@ -86,9 +89,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
+
+    
     /* Run Command Scheduler */
     CommandScheduler.getInstance().run();
 
+    // trigger safety functions
+    double currentTime = System.currentTimeMillis()/1000; 
+    shooter.checkSafety(currentTime - lastPeriodTime);
+    lastPeriodTime = currentTime;
+
+    
     /* Send battery voltage to Dashboard */
     dashboard.setBattery(RobotController.getBatteryVoltage());
 
@@ -103,6 +115,8 @@ public class Robot extends TimedRobot {
     } else {
       dashboard.setDistance(0.0);
     }
+    // Safety for motor toggle
+    //if (shooter)
   }
 
   /*

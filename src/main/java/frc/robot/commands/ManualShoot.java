@@ -11,6 +11,8 @@ import frc.robot.Robot;
  */
 public class ManualShoot extends CommandBase {
 
+    public boolean isActive = false;
+    boolean debounce = false;
     /*
      * Declares public function ManualShoot
      */
@@ -27,7 +29,16 @@ public class ManualShoot extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        Robot.shooter.on();
+        if (debounce == false) {
+            debounce = true;
+            if (Robot.shooter.isActive == true) {
+                Robot.shooter.isActive = false;
+                Robot.shooter.on();
+            } else {
+                Robot.shooter.isActive = true;
+                Robot.shooter.stop();
+            }
+        }    
     }
 
      /*
@@ -35,7 +46,9 @@ public class ManualShoot extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.stop();
+        if (interrupted) {
+            Robot.shooter.stop();
+        }
         //Robot.limelight.setDrive();
         //Robot.limelight.ledOff();
     }
@@ -45,6 +58,8 @@ public class ManualShoot extends CommandBase {
      */
     @Override
     public boolean isFinished() {
+        //return false; 
+        debounce = false;
         return !OI.shootButton.get();
     }
 
