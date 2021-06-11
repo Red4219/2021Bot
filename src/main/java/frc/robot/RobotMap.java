@@ -33,6 +33,7 @@ public class RobotMap {
   public static CANEncoder leftDriveEncoder;
   public static CANEncoder rightDriveEncoder;
   public static CANEncoder shooterAlignEncoder;
+  public static CANEncoder revolverEncoder;
 
   /* Initialize motors */
   public static CANSparkMax revolverMotor;
@@ -84,6 +85,7 @@ public class RobotMap {
     leftDriveEncoder = MiddleLeftMotor.getEncoder();
     rightDriveEncoder = MiddleRightMotor.getEncoder();
     shooterAlignEncoder = shooterAlignMotor.getEncoder();
+    revolverEncoder = revolverMotor.getEncoder();
 
     /* Define limit switches */
     intakeUpSwitch = new DigitalInput(1);

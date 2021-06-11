@@ -37,7 +37,7 @@ public class MoveRevolver extends CommandBase {
             System.out.println("CCW");
             Robot.revolver.rotateCCW();
         } else {
-            Robot.revolver.stop();
+            Robot.revolver.stop(false);
         }
     }
 
@@ -46,7 +46,7 @@ public class MoveRevolver extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        Robot.revolver.stop();
+        Robot.revolver.stop(false);
     }
 
     /*
