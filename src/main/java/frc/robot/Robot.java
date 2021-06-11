@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.paths.Straight;
@@ -67,7 +68,7 @@ public class Robot extends TimedRobot {
     shooter = new Shooter();
     shooterAlign = new ShooterAlign();
     oi = new OI();
-    lastPeriodTime = System.currentTimeMillis()/1000;
+    lastPeriodTime = Timer.getFPGATimestamp();
     /* Set Default Commands for Subsystems */
     driveTrain.setDefaultCommand(new TankDrive());
     shooterAlign.setDefaultCommand(new MoveShooterAdjust());
@@ -94,11 +95,13 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     // trigger safety functions
-    double currentTime = System.currentTimeMillis()/1000; 
+    double currentTime = Timer.getFPGATimestamp();
     shooter.checkSafety(currentTime - lastPeriodTime);
     lastPeriodTime = currentTime;
 
-    
+    // Send shooter RPM to dashboard //
+    dashboard.setShooterRPM(shooter.RPM);
+
     /* Send battery voltage to Dashboard */
     dashboard.setBattery(RobotController.getBatteryVoltage());
 

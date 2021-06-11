@@ -24,14 +24,13 @@ public class Shooter extends SubsystemBase {
     // This counter is attached to DIO 0 and measures PWM
 	Counter ShooterMag;   
 	// This counter counts the index pulses (revolutions)
-	Counter ShooterIndex; //full period counter
+	Counter ShooterIndex = new Counter(0); //full period counter
     int lastRotations = 0;
 
     /*
      * Make this class public
      */
-    public Shooter() {
-        ShooterIndex = new Counter(1);
+    public Shooter() { 
         ShooterIndex.reset();
     }
 
@@ -57,12 +56,17 @@ public class Shooter extends SubsystemBase {
     /*
     *   Safety for shooter motor
     */
+    public double RPM = 0.0;
     private int failedChecks = 0;
     public void checkSafety(double timeDelta) {
         int rotations = ShooterIndex.get();
+        int rotationDelta = rotations - lastRotations;
+        lastRotations = rotations;
+
+        //System.out.println("RAW: " + timeDelta);
         double timeFactor = (60/timeDelta);
-        double RPM = (rotations*timeFactor);
-        System.out.println( RPM + " RPM");
+        RPM = (rotationDelta*timeFactor);
+        //System.out.println( RPM + " RPM");
         if (isActive == true && RPM < 1000 ) {
             failedChecks ++;
             System.out.println("RPM CHECK FAILED <1000");
