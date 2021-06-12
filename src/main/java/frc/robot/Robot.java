@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.autonomous.paths.ForwardAndRotate;
 import frc.robot.autonomous.paths.Straight;
 import frc.robot.autonomous.paths.StraightAndShoot;
 import frc.robot.commands.TankDrive;
@@ -25,6 +26,7 @@ import frc.robot.subsystems.ShooterAlign;
  * This is the "main" class
  * 
  * Author: Francisco Fabregat
+ * Contributor: Harrison Lewis
  */
 public class Robot extends TimedRobot {
   
@@ -46,7 +48,7 @@ public class Robot extends TimedRobot {
   private int mode = 0;
 
   /* Initialize and define autonomous modes list */
-  String[] autoList = { "Move Straight", "DO NOT SELECT (Yet)"};
+  String[] autoList = { "Move Straight", "DO NOT SELECT (Yet)","el rotate"};
 
   /* Initialize Dashboard */
   public static Dashboard dashboard = new Dashboard();
@@ -147,6 +149,8 @@ public class Robot extends TimedRobot {
       autonomousCommand = (Command) new Straight();
     } else if (mode == 1) {
       autonomousCommand = (Command) new StraightAndShoot();
+    } else if (mode == 2) {
+      autonomousCommand = (Command) new ForwardAndRotate();
     } else {
       autonomousCommand = (Command) new Straight();
     }

@@ -45,7 +45,8 @@ public class ShooterAlign extends SubsystemBase {
      *
      */ 
     public void setMotor(double rawSpeed) {
-        if (getPosition() < 0.0 && Math.signum(rawSpeed) == -1) { //TODO: fix pls
+        double signum = Math.signum(rawSpeed);
+        if (signum == 0.0 || getPosition() > 0.0 && signum == -1 || getPosition() < 8 && signum == 1) { //TODO: fix pls
             shooterAlignMotor.set(Config.shootAlignSpeed*rawSpeed);
         } else {
             System.out.println("Limit");
@@ -88,7 +89,7 @@ public class ShooterAlign extends SubsystemBase {
 	    return cubic;
     }
     public double getTargetPosition(double distance) {
-        System.out.println("HELLO");
+        System.out.println("HELLO " + distance);
         if (distance >= 48 && distance <= 147.2) {
             double whole = (147.2 - distance);
             double p0[] = {48,0.1};

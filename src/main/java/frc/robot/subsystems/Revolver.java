@@ -45,6 +45,13 @@ public class Revolver extends SubsystemBase {
         }
     }
 
+    // Encoder stuff
+    public void resetEncoder() {
+        revolverEncoder.setPosition(0.0);
+    }
+    public double getDistance() {
+        return revolverEncoder.getPosition();
+    }
     /*
      * Rotate revolver clockwise
      */
@@ -83,6 +90,7 @@ public class Revolver extends SubsystemBase {
         revolverMotor.stopMotor();
         if (isAuto == false) {
             isFailing = false;
+            failCount = 0;
         }
     }
 }

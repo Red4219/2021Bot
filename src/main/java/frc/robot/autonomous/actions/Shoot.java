@@ -1,5 +1,6 @@
 package frc.robot.autonomous.actions;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
 import frc.robot.Robot;
@@ -7,37 +8,27 @@ import frc.robot.Robot;
 /*
  * This command moves the robot straight a certain distance
  * 
- * Author: Francisco Fabregat
+ * Author: Harrison Lewis
  */
 public class Shoot extends CommandBase {
 
     /* Initialize variables */
     boolean forwardMovement;
     double driveDistance;
-    double startDistanceL;
-    double startDistanceR;
-    double endDistanceL;
-    double endDistanceR;
+    double startDistance;
+    double startTime;
+    double endDistance;
     boolean setIntake;
     int counter = 0;
 
     /*
      * Declares public function that takes direction and distance in feet and inches
      */
-    public Shoot(boolean forward, double userFeet, double userInches, boolean intake) {
+    public Shoot() { // Dunno what the gear ratio is so once I find out i'll add a "ballCount"
 
         /* Require the necessary subsystems */
-        addRequirements(Robot.revolver);
-        addRequirements(Robot.shooter);
+        addRequirements(Robot.revolver,Robot.shooter);
 
-        /* Sets wether the movement is forward or not */
-        forwardMovement = forward;
-
-        /* Determine distance to move in feet */
-        driveDistance = (userFeet + (userInches / 12));
-
-        /* Determine whether to start the intake or not while moving */
-        setIntake = intake;
     }
 
     /*
@@ -45,69 +36,22 @@ public class Shoot extends CommandBase {
      */
     public void initialize() {
 
+        startTime = Timer.getFPGATimestamp();
         /*
          * Reset encoder values
          */
-        Robot.driveTrain.resetDriveEncoders();
-
-        if (forwardMovement) {
-            /*
-             * Set end distance for both sides by adding the distance to move to the current
-             * distance
-             */
-            endDistanceL = Robot.driveTrain.getLeftDistance() - driveDistance;
-            endDistanceR = Robot.driveTrain.getRightDistance() + driveDistance;
-        } else {
-            /*
-             * Set end distance for both sides by subtracting the distance to move to the
-             * current distance
-             */
-            endDistanceL = Robot.driveTrain.getLeftDistance() + driveDistance;
-            endDistanceR = Robot.driveTrain.getRightDistance() - driveDistance;
-        }
-
-        /* Determine the starting (current) distance for both sides */
-        startDistanceR = Robot.driveTrain.getRightDistance();
-        startDistanceL = Robot.driveTrain.getLeftDistance();
-
-        /* Print debug information in console */
-        System.out.println("Drive Distance: " + driveDistance);
-        System.out.println("Starting Distance: " + Robot.driveTrain.getRightDistance());
-        System.out.println("Left End Distance: " + endDistanceL);
-        System.out.println("Right End Distance: " + endDistanceR);
+        Robot.revolver.resetEncoder();
+        
+        Robot.shooter.on();
     }
 
     /*
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-
-        /* Get distance moved since command started */
-        double currentL = 0.0;
-        double currentR = 0.0;
-
-        if (forwardMovement) {
-            currentL = startDistanceL - Robot.driveTrain.getLeftDistance();
-            currentR = Robot.driveTrain.getRightDistance() - startDistanceR;
-        } else {
-            currentL = Robot.driveTrain.getLeftDistance() - startDistanceL;
-            currentR = startDistanceR - Robot.driveTrain.getRightDistance();
+        if (Timer.getFPGATimestamp() - startTime > 1.5) {
+            Robot.revolver.rotate(-0.8);
         }
-        /* Find an average of both distances moved to calculate an appropriate speed */
-        // double averageDistance = (currentL + currentR) / 2;
-
-        /* Set a tank drive movement with speed returning from getSpeed() */
-        if (forwardMovement) {
-            // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance) * -1,
-            // getSpeed(currentL, driveDistance) * -1);
-            Robot.driveTrain.tankDrive(-0.4, -0.4);
-        } else {
-            // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance),
-            // getSpeed(currentL, driveDistance));
-            Robot.driveTrain.tankDrive(0.4, 0.4);
-        }
-        /* Print debug information in console */
-        System.out.println("Distance: " + Robot.driveTrain.getRightDistance());
     }
 
     /*
@@ -115,24 +59,18 @@ public class Shoot extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (forwardMovement) {
-            /* Command ends if current distance is greater than the end distance */
-            return (Robot.driveTrain.getRightDistance() >= endDistanceR);
-        } else {
-            /*
-             * Command ends if current distance is less than the end distance, as it is
-             * moving back
-             */
-            System.out.println("****" + Robot.driveTrain.getLeftDistance() + " " + endDistanceL);
-            return (Robot.driveTrain.getRightDistance() <= endDistanceR);
+        if (Timer.getFPGATimestamp() - startTime > 7.5) {
+            return true;
         }
+        return false;
     }
 
     /*
-     * Stops drivetrain when command ends
+     * Stops motors when command ends
      */
     protected void end() {
-        Robot.driveTrain.stopTank();
+        Robot.shooter.stop();
+        Robot.revolver.stop(false);
     }
 
     /*
@@ -140,19 +78,5 @@ public class Shoot extends CommandBase {
      */
     protected void interrupted() {
         end();
-    }
-
-    /*
-     * Calculates speed based on distance to target. Demo of this function can be
-     * found here: https://www.desmos.com/calculator/mjxmn8nmug
-     */
-    private double getSpeed(double current, double total) {
-        double speed = (-1 / ((-1 - ((total - 1) / 2)) * (-1 - ((total - 1) / 2))));
-        speed = speed * (current - ((total - 1) / 2)) * (current - ((total - 1) / 2));
-        speed = speed + 1;
-        if (speed < Config.moveMinSpeed) {
-            speed = Config.moveMinSpeed;
-        }
-        return speed;
     }
 }
