@@ -116,6 +116,7 @@ public class StraightDrive extends CommandBase {
     public boolean isFinished() {
         if (forwardMovement) {
             /* Command ends if current distance is greater than the end distance */
+            System.out.println((Robot.driveTrain.getRightDistance() >= endDistanceR));
             return (Robot.driveTrain.getRightDistance() >= endDistanceR);
         } else {
             /*
@@ -132,6 +133,7 @@ public class StraightDrive extends CommandBase {
      */
     protected void end() {
         Robot.driveTrain.stopTank();
+        Robot.driveTrain.resetDriveEncoders();
     }
 
     /*
