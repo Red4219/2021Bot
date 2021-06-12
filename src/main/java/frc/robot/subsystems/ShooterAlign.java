@@ -45,7 +45,11 @@ public class ShooterAlign extends SubsystemBase {
      *
      */ 
     public void setMotor(double rawSpeed) {
-        shooterAlignMotor.set(Config.shootAlignSpeed*rawSpeed);
+        if (getPosition() < 0.0 && Math.signum(rawSpeed) == -1) { //TODO: fix pls
+            shooterAlignMotor.set(Config.shootAlignSpeed*rawSpeed);
+        } else {
+            System.out.println("Limit");
+        }
     }
     /*
      * Move shooter aligner down

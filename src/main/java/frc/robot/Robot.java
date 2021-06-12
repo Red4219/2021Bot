@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
     /* Send remaining time to Dashboard */
     dashboard.setTime(DriverStation.getInstance().getMatchTime());
     
+    //Hood encoder
     dashboard.setShootAdjustEncoder(shooterAlign.getPosition());
 
     /* Send distance to dashboard ONLY if tape is detected by the Limelight */
