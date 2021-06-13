@@ -7,12 +7,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.autonomous.paths.ForwardAndRotate;
 import frc.robot.autonomous.paths.Straight;
 import frc.robot.autonomous.paths.StraightAndShoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.MoveShooterAdjust;
+import frc.robot.commands.MoveRevolver;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Revolver;
@@ -23,6 +26,7 @@ import frc.robot.subsystems.ShooterAlign;
  * This is the "main" class
  * 
  * Author: Francisco Fabregat
+ * Contributor: Harrison Lewis
  */
 public class Robot extends TimedRobot {
   
@@ -36,12 +40,15 @@ public class Robot extends TimedRobot {
   public static Revolver revolver;
   public static Shooter shooter;
   public static ShooterAlign shooterAlign;
+  
+  //
+  private double lastPeriodTime;
 
   /* Define default autonomous mode id */
   private int mode = 0;
 
   /* Initialize and define autonomous modes list */
-  String[] autoList = { "Move Straight", "DO NOT SELECT (Yet)"};
+  String[] autoList = { "Move Straight", "DO NOT SELECT (Yet)","el rotate"};
 
   /* Initialize Dashboard */
   public static Dashboard dashboard = new Dashboard();
@@ -56,7 +63,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     /* Initialize RobotMap */
     RobotMap.init();
-
     /* Define OI and Subsystems */
     driveTrain = new Drive();
     intake = new Intake();
@@ -64,10 +70,12 @@ public class Robot extends TimedRobot {
     shooter = new Shooter();
     shooterAlign = new ShooterAlign();
     oi = new OI();
-
+    lastPeriodTime = Timer.getFPGATimestamp();
     /* Set Default Commands for Subsystems */
     driveTrain.setDefaultCommand(new TankDrive());
     shooterAlign.setDefaultCommand(new MoveShooterAdjust());
+    revolver.setDefaultCommand(new MoveRevolver());
+
     /* Push autonomous list to Dashboard */
     dashboard.setAutonomousList(autoList);
 
@@ -84,8 +92,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
     /* Run Command Scheduler */
     CommandScheduler.getInstance().run();
+
+    // trigger safety functions
+    double currentTime = Timer.getFPGATimestamp();
+    shooter.checkSafety(currentTime - lastPeriodTime);
+    lastPeriodTime = currentTime;
+
+    // Send shooter RPM to dashboard //
+    dashboard.setShooterRPM(shooter.RPM);
 
     /* Send battery voltage to Dashboard */
     dashboard.setBattery(RobotController.getBatteryVoltage());
@@ -93,6 +110,7 @@ public class Robot extends TimedRobot {
     /* Send remaining time to Dashboard */
     dashboard.setTime(DriverStation.getInstance().getMatchTime());
     
+    //Hood encoder
     dashboard.setShootAdjustEncoder(shooterAlign.getPosition());
 
     /* Send distance to dashboard ONLY if tape is detected by the Limelight */
@@ -101,6 +119,8 @@ public class Robot extends TimedRobot {
     } else {
       dashboard.setDistance(0.0);
     }
+    // Safety for motor toggle
+    //if (shooter)
   }
 
   /*
@@ -129,6 +149,8 @@ public class Robot extends TimedRobot {
       autonomousCommand = (Command) new Straight();
     } else if (mode == 1) {
       autonomousCommand = (Command) new StraightAndShoot();
+    } else if (mode == 2) {
+      autonomousCommand = (Command) new ForwardAndRotate();
     } else {
       autonomousCommand = (Command) new Straight();
     }

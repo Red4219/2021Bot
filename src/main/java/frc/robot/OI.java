@@ -82,8 +82,8 @@ public class OI {
     shootButton.whenPressed(new ManualShoot());
     //shootButton.whenPressed(new AutoShoot());
     autoAlignButton.whenPressed(new AutoAlign());
-    revolverCWButton.whenPressed(new MoveRevolver(true));
-    revolverCCWButton.whenPressed(new MoveRevolver(false));
+    //revolverCWButton.whenPressed(new MoveRevolver(true));
+    //revolverCCWButton.whenPressed(new MoveRevolver(false));
     intakeButton.whenPressed(new MoveIntake(true));
     reverseIntakeButton.whenPressed(new MoveIntake(false));
   }

@@ -7,36 +7,34 @@ import frc.robot.Robot;
 /*
  * This command moves the robot straight a certain distance
  * 
- * Author: Francisco Fabregat
+ * Author: Harrison Lewis
  */
-public class StraightDrive extends CommandBase {
+public class RotateDrive extends CommandBase {
 
     /* Initialize variables */
-    boolean forwardMovement;
+    boolean clockwise;
     double driveDistance;
     double startDistanceL;
     double startDistanceR;
     double endDistanceL;
     double endDistanceR;
-    boolean setIntake;
     int counter = 0;
 
     /*
      * Declares public function that takes direction and distance in feet and inches
      */
-    public StraightDrive(boolean forward, double userFeet, double userInches, boolean intake) {
+    public RotateDrive(boolean clockw, double degrees) {
 
         /* Require the necessary subsystems */
         addRequirements(Robot.driveTrain);
 
         /* Sets wether the movement is forward or not */
-        forwardMovement = forward;
+        clockwise = clockw;
 
-        /* Determine distance to move in feet */
-        driveDistance = (userFeet + (userInches / 12));
+        /* Determine distance to move in feet */ // 2πr (θ/360)
+        driveDistance = (2*Math.PI*14*(degrees/360))/12; //Arc length
 
         /* Determine whether to start the intake or not while moving */
-        setIntake = intake;
     }
 
     /*
@@ -49,22 +47,8 @@ public class StraightDrive extends CommandBase {
          */
         Robot.driveTrain.resetDriveEncoders();
 
-        if (forwardMovement) {
-            /*
-             * Set end distance for both sides by adding the distance to move to the current
-             * distance
-             */
-            endDistanceL = Robot.driveTrain.getLeftDistance() - driveDistance;
-            endDistanceR = Robot.driveTrain.getRightDistance() + driveDistance;
-        } else {
-            /*
-             * Set end distance for both sides by subtracting the distance to move to the
-             * current distance
-             */
-            endDistanceL = Robot.driveTrain.getLeftDistance() + driveDistance;
-            endDistanceR = Robot.driveTrain.getRightDistance() - driveDistance;
-        }
-
+        endDistanceL = Robot.driveTrain.getLeftDistance() + driveDistance;
+        endDistanceR = Robot.driveTrain.getRightDistance() + driveDistance;
         /* Determine the starting (current) distance for both sides */
         startDistanceR = Robot.driveTrain.getRightDistance();
         startDistanceL = Robot.driveTrain.getLeftDistance();
@@ -85,9 +69,9 @@ public class StraightDrive extends CommandBase {
         double currentL = 0.0;
         double currentR = 0.0;
 
-        if (forwardMovement) {
-            currentL = startDistanceL - Robot.driveTrain.getLeftDistance();
-            currentR = Robot.driveTrain.getRightDistance() - startDistanceR;
+        if (clockwise) {
+            currentL = Robot.driveTrain.getLeftDistance() - startDistanceL;
+            currentR = startDistanceR - Robot.driveTrain.getRightDistance();
         } else {
             currentL = Robot.driveTrain.getLeftDistance() - startDistanceL;
             currentR = startDistanceR - Robot.driveTrain.getRightDistance();
@@ -96,17 +80,17 @@ public class StraightDrive extends CommandBase {
         // double averageDistance = (currentL + currentR) / 2;
 
         /* Set a tank drive movement with speed returning from getSpeed() */
-        if (forwardMovement) {
+        if (clockwise) {
             // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance) * -1,
             // getSpeed(currentL, driveDistance) * -1);
-            Robot.driveTrain.tankDrive(-0.4, -0.4);
+            Robot.driveTrain.tankDrive(-0.4, 0.4);
         } else {
             // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance),
             // getSpeed(currentL, driveDistance));
-            Robot.driveTrain.tankDrive(0.4, 0.4);
+            Robot.driveTrain.tankDrive(-0.4, 0.4);
         }
         /* Print debug information in console */
-        System.out.println("Distance: " + Robot.driveTrain.getRightDistance());
+        System.out.println("ROTATE Distance: " + Robot.driveTrain.getRightDistance());
     }
 
     /*
@@ -114,18 +98,17 @@ public class StraightDrive extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (forwardMovement) {
+        //if (clockwise) {
             /* Command ends if current distance is greater than the end distance */
-            System.out.println((Robot.driveTrain.getRightDistance() >= endDistanceR));
-            return (Robot.driveTrain.getRightDistance() >= endDistanceR);
-        } else {
+            return (Math.abs(Robot.driveTrain.getRightDistance()) >= Math.abs(endDistanceR));
+        //} else {
             /*
              * Command ends if current distance is less than the end distance, as it is
              * moving back
              */
-            System.out.println("****" + Robot.driveTrain.getLeftDistance() + " " + endDistanceL);
-            return (Robot.driveTrain.getRightDistance() <= endDistanceR);
-        }
+        //    System.out.println("****" + Robot.driveTrain.getLeftDistance() + " " + endDistanceL);
+        //    return (Robot.driveTrain.getRightDistance() <= endDistanceR);
+       //}
     }
 
     /*
