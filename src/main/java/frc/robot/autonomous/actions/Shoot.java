@@ -61,32 +61,9 @@ public class Shoot extends CommandBase {
             Robot.shooter.on();
             Robot.revolver.rotate(-0.8);
         } else if (Timer.getFPGATimestamp() - startTime > 4) {
-            Robot.driveTrain.stopTank();
-            double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
-            if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
-                //Robot.revolver.stop();
-
-                if (Robot.shooterAlign.getPosition() > alignTarget) {
-                    Robot.shooterAlign.moveDown();
-                } else {
-                    Robot.shooterAlign.moveUp();
-                }
-            } else {
-                Robot.shooterAlign.stop();
-                //Robot.revolver.rotateCW();
-                //Robot.revolver.rotateCW();
-            }
+            Robot.aligner.hood();
         } else if (Timer.getFPGATimestamp() - startTime > 1) {
-            double degreesOff = Robot.limelight.getTx();
-            if (Math.abs(degreesOff) > Config.shootTurnTolerance) {
-                if (degreesOff > 0) {
-                    Robot.driveTrain.adjustTargetRight();
-                } else {
-                    Robot.driveTrain.adjustTargetLeft();
-                }
-            } else {
-                Robot.driveTrain.stopTank();
-            }
+            Robot.aligner.robot();
         }
     }
 
@@ -110,8 +87,9 @@ public class Shoot extends CommandBase {
         Robot.shooter.stop(); // this one no work???
         Robot.limelight.setDrive();
         Robot.limelight.ledOff();
-        Robot.driveTrain.stopTank();
-        Robot.shooterAlign.stop();
+        //Robot.driveTrain.stopTank();
+        //Robot.shooterAlign.stop();
+        Robot.aligner.stop();
         Robot.revolver.stop(false); 
     }
 

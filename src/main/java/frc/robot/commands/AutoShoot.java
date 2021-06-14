@@ -49,31 +49,9 @@ public class AutoShoot extends CommandBase {
         } else {
             Robot.intake.stop();
             if (tapeFound) {
-                if (Math.abs(degreesOff) > Config.shootTurnTolerance) {
-                    if (degreesOff > 0) {
-                        Robot.driveTrain.adjustTargetRight();
-                    } else {
-                        Robot.driveTrain.adjustTargetLeft();
-                    }
-                } else {
-                    Robot.driveTrain.stopTank();
-                }
+                Robot.aligner.robot();
                 //
-                double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
-
-                if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
-                    //Robot.revolver.stop();
-
-                    if (Robot.shooterAlign.getPosition() > alignTarget) {
-                        Robot.shooterAlign.moveDown();
-                    } else {
-                        Robot.shooterAlign.moveUp();
-                    }
-                } else {
-                    Robot.shooterAlign.stop();
-                    //Robot.revolver.rotateCW();
-                    //Robot.revolver.rotateCW();
-                }
+                Robot.aligner.hood();
             } else {
                 System.out.println("No Tape found");
                 Robot.driveTrain.stopTank();

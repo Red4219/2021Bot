@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
   public static Intake intake;
   public static Revolver revolver;
   public static Shooter shooter;
+  
   public static ShooterAlign shooterAlign;
   
   //
@@ -56,6 +57,8 @@ public class Robot extends TimedRobot {
   /* Initialize Limelight */
   public static Limelight limelight = new Limelight();
 
+  // Init aligner
+  public static Aligner aligner;
   /*
    * This function is executed only once when the robot boots up
    */
