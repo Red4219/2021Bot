@@ -3,6 +3,7 @@ package frc.robot.autonomous.actions;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /*
  * This command moves the robot straight a certain distance
@@ -24,7 +25,7 @@ public class DriveTillDistance extends CommandBase {
     public DriveTillDistance(double distance ) {
 
         /* Require the necessary subsystems */
-        addRequirements(Robot.driveTrain);
+        addRequirements(Robot.driveTrain,Robot.intake);
 
         /* Determine distance to move in feet */
         driveDistance = distance;
@@ -39,8 +40,14 @@ public class DriveTillDistance extends CommandBase {
         /*
          * Reset encoder values
          */
+        Robot.limelight.setVision();
+        Robot.limelight.ledOn();
         Robot.driveTrain.resetDriveEncoders();
 
+        //
+        //if (!RobotMap.intakeDownSwitch.get()) {
+            Robot.intake.lower();
+        //}
         /* Determine the starting (current) distance for both sides */
         startDistanceR = Robot.driveTrain.getRightDistance();
         startDistanceL = Robot.driveTrain.getLeftDistance();
@@ -68,11 +75,11 @@ public class DriveTillDistance extends CommandBase {
         // compensate for potential motor inconsistencies. Will help with slight drift to 1 side
         double rSpeed = 0.4;
         double lSpeed = 0.4;
-        if (currentL > currentR) {
+        /*if (currentL > currentR) {
             rSpeed *= (currentR/currentL);
         } else if (currentR > currentL) {
             lSpeed *= (currentL/currentR);
-        }
+        }*/
 
         // SAFETY JUST INCASE MY MATH SUCKS
 
@@ -104,6 +111,8 @@ public class DriveTillDistance extends CommandBase {
      * Stops drivetrain when command ends
      */
     protected void end() {
+        Robot.limelight.setDrive();
+        Robot.limelight.ledOff();
         Robot.driveTrain.stopTank();
         Robot.driveTrain.resetDriveEncoders();
     }

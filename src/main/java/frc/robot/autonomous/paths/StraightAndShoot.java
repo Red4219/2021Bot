@@ -19,7 +19,7 @@ public class StraightAndShoot extends SequentialCommandGroup {
         addCommands(
             /* Drives forward for 6ft 0in */
             //new StraightDrive(true, 6, 0, false),
-            new DriveTillDistance(70),
+            new DriveTillDistance(90),
             new Shoot()
         );
     }

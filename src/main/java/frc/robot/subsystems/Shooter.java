@@ -38,6 +38,7 @@ public class Shooter extends SubsystemBase {
      * Turn on shooter
      */
     public void on() {
+        System.out.println("GOGOGO");
         shooterMotor.set(-Config.shooterSpeed);
         isActive = true;
         //OI.operator.setRumble(RumbleType.kLeftRumble, 0.5);
@@ -48,6 +49,8 @@ public class Shooter extends SubsystemBase {
      * Stop shooter
      */
     public void stop() {
+        System.out.println("STOP PLEASE PLEASE STOP");
+        shooterMotor.set(0.0);
         shooterMotor.stopMotor();
         isActive = false;
         //OI.operator.setRumble(RumbleType.kLeftRumble, 0.5);

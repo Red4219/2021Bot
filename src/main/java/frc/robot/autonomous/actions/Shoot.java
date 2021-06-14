@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /*
  * This command moves the robot straight a certain distance
@@ -29,8 +30,10 @@ public class Shoot extends CommandBase {
     public Shoot() { // Dunno what the gear ratio is so once I find out i'll add a "ballCount"
 
         /* Require the necessary subsystems */
-        addRequirements(Robot.revolver,Robot.shooter);
+        addRequirements(Robot.revolver,Robot.shooter,Robot.intake,Robot.shooterAlign);
 
+        Robot.limelight.setVision();
+        Robot.limelight.ledOn();
     }
 
     /*
@@ -43,18 +46,21 @@ public class Shoot extends CommandBase {
          * Reset encoder values
          */
         Robot.revolver.resetEncoder();
-        
-        Robot.shooter.on();
+        if (!RobotMap.intakeDownSwitch.get()) {
+            Robot.intake.lower();
+        }
+        //Robot.shooter.on();
     }
 
     /*
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (Timer.getFPGATimestamp() - startTime > 5) {
+        if (Timer.getFPGATimestamp() - startTime > 6) {
             Robot.shooterAlign.stop();
+            Robot.shooter.on();
             Robot.revolver.rotate(-0.8);
-        } else if (Timer.getFPGATimestamp() - startTime > 3) {
+        } else if (Timer.getFPGATimestamp() - startTime > 4) {
             Robot.driveTrain.stopTank();
             double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
             if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
@@ -89,7 +95,9 @@ public class Shoot extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (Timer.getFPGATimestamp() - startTime > 8) {
+        System.out.println("CURRENT TIME: " + (Timer.getFPGATimestamp() - startTime));
+        if (Timer.getFPGATimestamp() - startTime > 14) {
+            Robot.shooter.stop();
             return true;
         }
         return false;
@@ -99,10 +107,12 @@ public class Shoot extends CommandBase {
      * Stops motors when command ends
      */
     protected void end() {
-        Robot.shooter.stop();
+        Robot.shooter.stop(); // this one no work???
+        Robot.limelight.setDrive();
+        Robot.limelight.ledOff();
         Robot.driveTrain.stopTank();
         Robot.shooterAlign.stop();
-        Robot.revolver.stop(false);
+        Robot.revolver.stop(false); 
     }
 
     /*

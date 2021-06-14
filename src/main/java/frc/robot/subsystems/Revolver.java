@@ -21,7 +21,7 @@ public class Revolver extends SubsystemBase {
     CANEncoder revolverEncoder = RobotMap.revolverEncoder;
 
     //Safety stuff
-    int failLimit = 10;
+    int failLimit = 15;
     int failCount = 0;
     boolean isFailing = false;
     /*
@@ -34,7 +34,7 @@ public class Revolver extends SubsystemBase {
     private void safetyCheck() {
         double RPM = Math.abs(revolverEncoder.getVelocity());
         System.out.println("REV RPM: " + RPM);
-        if (RPM < 60) {
+        if (RPM < 350) {
             failCount ++;
         }
         if (failCount >= failLimit) {
@@ -87,6 +87,8 @@ public class Revolver extends SubsystemBase {
      * Stop revolver
      */
     public void stop(boolean isAuto) {
+        OI.operator.setRumble(RumbleType.kLeftRumble, 0.0);
+        OI.operator.setRumble(RumbleType.kRightRumble, 0.0);
         revolverMotor.stopMotor();
         if (isAuto == false) {
             isFailing = false;

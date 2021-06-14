@@ -72,11 +72,11 @@ public class StraightDrive extends CommandBase {
         // compensate for potential motor inconsistencies. Will help with slight drift to 1 side
         double rSpeed = 0.4;
         double lSpeed = 0.4;
-        if (currentL > currentR) {
+        /*if (currentL > currentR) {
             rSpeed *= (currentR/currentL);
         } else if (currentR > currentL) {
             lSpeed *= (currentL/currentR);
-        }
+        }*/
 
         // SAFETY JUST INCASE MY MATH SUCKS
 

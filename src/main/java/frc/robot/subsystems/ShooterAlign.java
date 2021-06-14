@@ -105,11 +105,11 @@ public class ShooterAlign extends SubsystemBase {
             double whole = (147.2 - 48);
             double p0[] = {48,0.1};
             double p1[] = {103.5,4};
-            double p2[] = {125.7,12};
+            double p2[] = {125.7,13.5};
             double p3[] = {142.7,0};
 
             double result[] = cubicBezier((distance-48)/whole, p0, p1, p2, p3);
-            System.out.println((distance-48)/whole);
+            //System.out.println((distance-48)/whole);
             System.out.println(result[0] + ", " + result[1]);
             return result[1];
         }

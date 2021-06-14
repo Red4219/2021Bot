@@ -57,22 +57,22 @@ public class AutoShoot extends CommandBase {
                     }
                 } else {
                     Robot.driveTrain.stopTank();
+                }
+                //
+                double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
 
-                    double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
+                if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
+                    //Robot.revolver.stop();
 
-                    if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
-                        //Robot.revolver.stop();
-
-                        if (Robot.shooterAlign.getPosition() > alignTarget) {
-                            Robot.shooterAlign.moveDown();
-                        } else {
-                            Robot.shooterAlign.moveUp();
-                        }
+                    if (Robot.shooterAlign.getPosition() > alignTarget) {
+                        Robot.shooterAlign.moveDown();
                     } else {
-                        Robot.shooterAlign.stop();
-                        //Robot.revolver.rotateCW();
-                        //Robot.revolver.rotateCW();
+                        Robot.shooterAlign.moveUp();
                     }
+                } else {
+                    Robot.shooterAlign.stop();
+                    //Robot.revolver.rotateCW();
+                    //Robot.revolver.rotateCW();
                 }
             } else {
                 System.out.println("No Tape found");
