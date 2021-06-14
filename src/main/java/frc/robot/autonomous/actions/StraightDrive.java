@@ -16,8 +16,6 @@ public class StraightDrive extends CommandBase {
     double driveDistance;
     double startDistanceL;
     double startDistanceR;
-    double endDistanceL;
-    double endDistanceR;
     boolean setIntake;
     int counter = 0;
 
@@ -49,22 +47,6 @@ public class StraightDrive extends CommandBase {
          */
         Robot.driveTrain.resetDriveEncoders();
 
-        if (forwardMovement) {
-            /*
-             * Set end distance for both sides by adding the distance to move to the current
-             * distance
-             */
-            endDistanceL = Robot.driveTrain.getLeftDistance() - driveDistance;
-            endDistanceR = Robot.driveTrain.getRightDistance() + driveDistance;
-        } else {
-            /*
-             * Set end distance for both sides by subtracting the distance to move to the
-             * current distance
-             */
-            endDistanceL = Robot.driveTrain.getLeftDistance() + driveDistance;
-            endDistanceR = Robot.driveTrain.getRightDistance() - driveDistance;
-        }
-
         /* Determine the starting (current) distance for both sides */
         startDistanceR = Robot.driveTrain.getRightDistance();
         startDistanceL = Robot.driveTrain.getLeftDistance();
@@ -72,8 +54,6 @@ public class StraightDrive extends CommandBase {
         /* Print debug information in console */
         System.out.println("Drive Distance: " + driveDistance);
         System.out.println("Starting Distance: " + Robot.driveTrain.getRightDistance());
-        System.out.println("Left End Distance: " + endDistanceL);
-        System.out.println("Right End Distance: " + endDistanceR);
     }
 
     /*
@@ -85,13 +65,28 @@ public class StraightDrive extends CommandBase {
         double currentL = 0.0;
         double currentR = 0.0;
 
-        if (forwardMovement) {
-            currentL = startDistanceL - Robot.driveTrain.getLeftDistance();
-            currentR = Robot.driveTrain.getRightDistance() - startDistanceR;
-        } else {
-            currentL = Robot.driveTrain.getLeftDistance() - startDistanceL;
-            currentR = startDistanceR - Robot.driveTrain.getRightDistance();
+        
+        currentL = Math.abs(startDistanceL - Robot.driveTrain.getLeftDistance());
+        currentR = Math.abs(startDistanceR - Robot.driveTrain.getRightDistance());
+
+        // compensate for potential motor inconsistencies. Will help with slight drift to 1 side
+        double rSpeed = 0.4;
+        double lSpeed = 0.4;
+        if (currentL > currentR) {
+            rSpeed *= (currentR/currentL);
+        } else if (currentR > currentL) {
+            lSpeed *= (currentL/currentR);
         }
+
+        // SAFETY JUST INCASE MY MATH SUCKS
+
+        if (rSpeed > 0.5 || lSpeed > 0.5) {
+            rSpeed = 0.4;
+            lSpeed = 0.4;
+            System.out.println("VERY BAD AUTONOMOUS CODE");
+        }
+
+        ///
         /* Find an average of both distances moved to calculate an appropriate speed */
         // double averageDistance = (currentL + currentR) / 2;
 
@@ -99,11 +94,11 @@ public class StraightDrive extends CommandBase {
         if (forwardMovement) {
             // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance) * -1,
             // getSpeed(currentL, driveDistance) * -1);
-            Robot.driveTrain.tankDrive(-0.4, -0.4);
+            Robot.driveTrain.tankDrive(-lSpeed, -rSpeed);
         } else {
             // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance),
             // getSpeed(currentL, driveDistance));
-            Robot.driveTrain.tankDrive(0.4, 0.4);
+            Robot.driveTrain.tankDrive(lSpeed, rSpeed);
         }
         /* Print debug information in console */
         System.out.println("Distance: " + Robot.driveTrain.getRightDistance());
@@ -114,18 +109,7 @@ public class StraightDrive extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (forwardMovement) {
-            /* Command ends if current distance is greater than the end distance */
-            System.out.println((Robot.driveTrain.getRightDistance() >= endDistanceR));
-            return (Robot.driveTrain.getRightDistance() >= endDistanceR);
-        } else {
-            /*
-             * Command ends if current distance is less than the end distance, as it is
-             * moving back
-             */
-            System.out.println("****" + Robot.driveTrain.getLeftDistance() + " " + endDistanceL);
-            return (Robot.driveTrain.getRightDistance() <= endDistanceR);
-        }
+        return Math.abs(startDistanceR - Robot.driveTrain.getRightDistance()) >= driveDistance;
     }
 
     /*
