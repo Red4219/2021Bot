@@ -10,7 +10,7 @@ public final class Config {
     /* Configuration for drivetrain speeds */
     public static double moveMinSpeed = 0.2;
     public static double turnMinSpeed = 0.2;
-    public static double moveMaxSpeed = 1.0;
+    public static double moveMaxSpeed = 0.7;
     public static double turnMaxSpeed = 0.95;
     public static double turnAccel = 0.075;
     public static double driveTargetAdjustSpeed = 0.2;
