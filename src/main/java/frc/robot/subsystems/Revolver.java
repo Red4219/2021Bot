@@ -21,7 +21,7 @@ public class Revolver extends SubsystemBase {
     CANEncoder revolverEncoder = RobotMap.revolverEncoder;
 
     //Safety stuff
-    int failLimit = 12;
+    int failLimit = 10;
     int failCount = 0;
     boolean isFailing = false;
     /*
@@ -39,7 +39,7 @@ public class Revolver extends SubsystemBase {
         }
         if (failCount >= failLimit) {
             isFailing = true;
-            stop(true);
+            //stop(true);
             OI.operator.setRumble(RumbleType.kLeftRumble, 0.5);
             OI.operator.setRumble(RumbleType.kRightRumble, 0.5);
         }

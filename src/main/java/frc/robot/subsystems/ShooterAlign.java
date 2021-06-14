@@ -24,6 +24,16 @@ public class ShooterAlign extends SubsystemBase {
     /*
      * Get encoder position of shooter aligner
      */
+    private boolean isSafe(double rawSpeed) {
+        double signum = Math.signum(rawSpeed);
+        if (signum == 0.0 || getPosition() > 0.0 && signum == -1 || getPosition() < 12 && signum == 1) { //TODO: fix pls
+            return true;
+        } else {
+            System.out.println("Limit");
+            stop();
+        }
+        return false;
+    }
     public double getPosition() {
         return RobotMap.shooterAlignEncoder.getPosition();
     }
@@ -39,25 +49,25 @@ public class ShooterAlign extends SubsystemBase {
      * Move shooter aligner up
      */
     public void moveUp() {
-        shooterAlignMotor.set(Config.shootAlignSpeed);
+        if (isSafe(1.0)) {
+            shooterAlignMotor.set(Config.shootAlignSpeed);
+        }
     }
     /*
      *
      */ 
     public void setMotor(double rawSpeed) {
-        double signum = Math.signum(rawSpeed);
-        if (signum == 0.0 || getPosition() > 0.0 && signum == -1 || getPosition() < 12 && signum == 1) { //TODO: fix pls
+        if (isSafe(rawSpeed)) {
             shooterAlignMotor.set(Config.shootAlignSpeed*rawSpeed);
-        } else {
-            System.out.println("Limit");
-            stop();
         }
     }
     /*
      * Move shooter aligner down
      */
     public void moveDown() {
-        shooterAlignMotor.set(-Config.shootAlignSpeed);
+        if (isSafe(-1.0)) {
+            shooterAlignMotor.set(-Config.shootAlignSpeed);
+        }
     }
 
     /*
