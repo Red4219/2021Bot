@@ -1,6 +1,7 @@
 package frc.robot.autonomous.paths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.autonomous.actions.DriveTillDistance;
 import frc.robot.autonomous.actions.Shoot;
 import frc.robot.autonomous.actions.StraightDrive;
 
@@ -17,7 +18,8 @@ public class StraightAndShoot extends SequentialCommandGroup {
     public StraightAndShoot() {
         addCommands(
             /* Drives forward for 6ft 0in */
-            new StraightDrive(true, 6, 0, false),
+            //new StraightDrive(true, 6, 0, false),
+            new DriveTillDistance(70),
             new Shoot()
         );
     }

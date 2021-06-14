@@ -1,5 +1,7 @@
 package frc.robot.autonomous.actions;
 
+import java.sql.Time;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
@@ -49,8 +51,36 @@ public class Shoot extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (Timer.getFPGATimestamp() - startTime > 1.5) {
+        if (Timer.getFPGATimestamp() - startTime > 5) {
+            Robot.shooterAlign.stop();
             Robot.revolver.rotate(-0.8);
+        } else if (Timer.getFPGATimestamp() - startTime > 3) {
+            Robot.driveTrain.stopTank();
+            double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
+            if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
+                //Robot.revolver.stop();
+
+                if (Robot.shooterAlign.getPosition() > alignTarget) {
+                    Robot.shooterAlign.moveDown();
+                } else {
+                    Robot.shooterAlign.moveUp();
+                }
+            } else {
+                Robot.shooterAlign.stop();
+                //Robot.revolver.rotateCW();
+                //Robot.revolver.rotateCW();
+            }
+        } else if (Timer.getFPGATimestamp() - startTime > 1) {
+            double degreesOff = Robot.limelight.getTx();
+            if (Math.abs(degreesOff) > Config.shootTurnTolerance) {
+                if (degreesOff > 0) {
+                    Robot.driveTrain.adjustTargetRight();
+                } else {
+                    Robot.driveTrain.adjustTargetLeft();
+                }
+            } else {
+                Robot.driveTrain.stopTank();
+            }
         }
     }
 
@@ -59,7 +89,7 @@ public class Shoot extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (Timer.getFPGATimestamp() - startTime > 7.5) {
+        if (Timer.getFPGATimestamp() - startTime > 8) {
             return true;
         }
         return false;
@@ -70,6 +100,8 @@ public class Shoot extends CommandBase {
      */
     protected void end() {
         Robot.shooter.stop();
+        Robot.driveTrain.stopTank();
+        Robot.shooterAlign.stop();
         Robot.revolver.stop(false);
     }
 
