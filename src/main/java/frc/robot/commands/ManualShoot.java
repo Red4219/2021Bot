@@ -29,16 +29,16 @@ public class ManualShoot extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (debounce == false) {
+        /*if (debounce == false) {
             debounce = true;
             if (Robot.shooter.isActive == true) {
-                Robot.shooter.isActive = false;
+                Robot.shooter.isActive = false;*/
                 Robot.shooter.on();
-            } else {
+           /* } else {
                 Robot.shooter.isActive = true;
-                Robot.shooter.stop();
-            }
-        }    
+              */ // Robot.shooter.stop();
+            //}
+       // }    
     }
 
      /*
@@ -46,9 +46,9 @@ public class ManualShoot extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        if (interrupted) {
+        //if (interrupted) {
             Robot.shooter.stop();
-        }
+        //}
         //Robot.limelight.setDrive();
         //Robot.limelight.ledOff();
     }

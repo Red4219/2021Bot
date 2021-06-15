@@ -46,9 +46,9 @@ public class Shoot extends CommandBase {
          * Reset encoder values
          */
         Robot.revolver.resetEncoder();
-        if (!RobotMap.intakeDownSwitch.get()) {
+        //if (!RobotMap.intakeDownSwitch.get()) {
             Robot.intake.lower();
-        }
+        //}
         //Robot.shooter.on();
     }
 
@@ -63,6 +63,7 @@ public class Shoot extends CommandBase {
         } else if (Timer.getFPGATimestamp() - startTime > 4) {
             Robot.aligner.hood();
         } else if (Timer.getFPGATimestamp() - startTime > 1) {
+            Robot.intake.stopLift();
             Robot.aligner.robot();
         }
     }

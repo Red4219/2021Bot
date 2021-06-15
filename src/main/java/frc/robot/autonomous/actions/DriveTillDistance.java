@@ -1,5 +1,6 @@
 package frc.robot.autonomous.actions;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
 import frc.robot.Robot;
@@ -31,15 +32,16 @@ public class DriveTillDistance extends CommandBase {
         driveDistance = distance;
         /* Determine whether to start the intake or not while moving */
     }
-
+    double startTime = Timer.getFPGATimestamp();
     /*
      * Function runs only once when the command starts
      */
     public void initialize() {
-
+        startTime = Timer.getFPGATimestamp();
         /*
          * Reset encoder values
          */
+        
         Robot.limelight.setVision();
         Robot.limelight.ledOn();
         Robot.driveTrain.resetDriveEncoders();
@@ -82,7 +84,9 @@ public class DriveTillDistance extends CommandBase {
         }*/
 
         // SAFETY JUST INCASE MY MATH SUCKS
-
+        if (Timer.getFPGATimestamp() - startTime > 1) {
+            Robot.intake.stopLift();
+        }
         if (rSpeed > 0.5 || lSpeed > 0.5) {
             rSpeed = 0.4;
             lSpeed = 0.4;
@@ -115,6 +119,7 @@ public class DriveTillDistance extends CommandBase {
         Robot.limelight.ledOff();
         Robot.driveTrain.stopTank();
         Robot.driveTrain.resetDriveEncoders();
+        Robot.intake.stopLift();
     }
 
     /*

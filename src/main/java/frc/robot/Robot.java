@@ -115,6 +115,9 @@ public class Robot extends TimedRobot {
     
     //Hood encoder
     dashboard.setShootAdjustEncoder(shooterAlign.getPosition());
+    System.out.println("POINTER: " + shooterAlign.getPosition());
+    System.out.println("DISTANC: " + limelight.getDistance());
+
 
     /* Send distance to dashboard ONLY if tape is detected by the Limelight */
     if (limelight.hasTarget()) {

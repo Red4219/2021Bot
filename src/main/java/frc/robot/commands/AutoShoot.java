@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
 import frc.robot.OI;
@@ -16,6 +17,7 @@ public class AutoShoot extends CommandBase {
     /*
      * Declares public function AutoShoot
      */
+    double startTime = Timer.getFPGATimestamp();
     public AutoShoot() {
         addRequirements(Robot.driveTrain);
         addRequirements(Robot.intake);
@@ -31,6 +33,7 @@ public class AutoShoot extends CommandBase {
         Robot.limelight.setVision();
         Robot.limelight.ledOn();
         Robot.shooter.on();
+        startTime = Timer.getFPGATimestamp();
     }
 
     /*
@@ -40,14 +43,13 @@ public class AutoShoot extends CommandBase {
         /* Get distance moved since command started */
         double degreesOff = Robot.limelight.getTx();
         boolean tapeFound = Robot.limelight.hasTarget();
-
-        if (!RobotMap.intakeDownSwitch.get()) {
+        if (Timer.getFPGATimestamp() - startTime < 1) {
             Robot.intake.lower();
             Robot.driveTrain.stopTank();
             //Robot.revolver.stop();
             Robot.shooterAlign.stop();
         } else {
-            Robot.intake.stop();
+            Robot.intake.stopLift();
             if (tapeFound) {
                 Robot.aligner.robot();
                 //

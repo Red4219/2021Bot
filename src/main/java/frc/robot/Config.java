@@ -13,7 +13,7 @@ public final class Config {
     public static double moveMaxSpeed = 0.7;
     public static double turnMaxSpeed = 0.95;
     public static double turnAccel = 0.075;
-    public static double driveTargetAdjustSpeed = 0.15;
+    public static double driveTargetAdjustSpeed = 0.2;
     public static double driveManualAdjustSpeed = 0.3;
 
     /* Configuration for intake */
@@ -27,7 +27,7 @@ public final class Config {
     /* Configuration for shooter */
     public static double shooterSpeed = 1;
     public static double shootTurnTolerance = 1.0;
-    public static double shootAlignSpeed = 0.15;
+    public static double shootAlignSpeed = 0.12;
     public static double shootAlignTolerance = 0.5;
 
     /* Limelight variables */
