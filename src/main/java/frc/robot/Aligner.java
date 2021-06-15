@@ -60,5 +60,3 @@ public class Aligner {
         Robot.shooterAlign.stop();
     }
 }
-
-

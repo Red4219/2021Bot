@@ -59,8 +59,8 @@ public class ManualShoot extends CommandBase {
     @Override
     public boolean isFinished() {
         //return false; 
-        debounce = false;
-        return !OI.shootButton.get();
+        debounce = false; // move this to make toggle
+        return !OI.manualShootButton.get();
     }
 
     /*
