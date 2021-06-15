@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
   public static Limelight limelight = new Limelight();
 
   // Init aligner
-  public static Aligner aligner;
+  public static Aligner aligner = new Aligner();
   /*
    * This function is executed only once when the robot boots up
    */
