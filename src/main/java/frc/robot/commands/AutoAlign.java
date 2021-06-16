@@ -37,7 +37,8 @@ public class AutoAlign extends CommandBase {
      */
     public void execute() {
         /* Get distance moved since command started */
-        degreesOff = Robot.limelight.getTx();
+        Robot.aligner.robot();
+        /*degreesOff = Robot.limelight.getTx();
         tapeFound = Robot.limelight.hasTarget();
 
         if (tapeFound) {
@@ -53,10 +54,10 @@ public class AutoAlign extends CommandBase {
         } else {
             System.out.println("No Tape found");
             Robot.driveTrain.stopTank();
-        }
+        }*/
         
         /* Print debug information in console */
-        System.out.println("Degrees off: " + degreesOff);
+        //System.out.println("Degrees off: " + degreesOff);
     }
 
     /*

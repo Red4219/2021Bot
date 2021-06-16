@@ -51,9 +51,9 @@ public class LiftIntake extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        if (interrupted) {
-            Robot.intake.stopLift();
-        }
+        //if (interrupted) {
+        //    Robot.intake.stopLift();
+        //}
     }
 
     /*

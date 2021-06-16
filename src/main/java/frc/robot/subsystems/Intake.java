@@ -28,8 +28,9 @@ public class Intake extends SubsystemBase {
     /*
      * Make this class public
      */
-    boolean state = false; // false = up
-    public boolean currentState = false;
+    boolean state = true; // false = down
+    public boolean currentState = true;
+    boolean countering = false;
     boolean moving = false;
     public Intake() {
         intakeLiftEncoder.setPosition(0.0);
@@ -44,21 +45,44 @@ public class Intake extends SubsystemBase {
         //boolean a = RobotBase.isEnabled();
         double RPM = Math.abs(intakeLiftEncoder.getVelocity());
         double Position = intakeLiftEncoder.getPosition();
-        if (RPM < 5) {
-            failCount++;
-            if (failCount > 5) {
-                moving = false;
-                intakeLiftMotor.stopMotor();
-                currentState = state;
-                failCount = 0;
+        //System.out.println("CHECK: " + moving);
+        if ( intakeLiftMotor.get() != 0.0) {
+            if (RPM < 10 ) {
+                failCount++;
+                System.out.println("FAIL INC");
+                if (failCount > 4 || countering && failCount > 2) {
+                    moving = false;
+                    countering = false;
+                    intakeLiftMotor.stopMotor();
+                    System.out.println("FAIL MAX!");
+                    //System.out.println("STOP");
+                    currentState = state;
+                    if (state == true) {
+                        upEncoderPos = Position;
+                    }
+                    failCount = 0;
+                }
+            } else {
+                System.out.println("MOVE IS NOW TRUE");
+                moving = true;
+                failCount --;
+                if (failCount < 0) {
+                    failCount = 0;
+                }
             }
-        } else {
-            moving = true;
-            failCount --;
         }
         if (state == true) {
-            if (currentState != true) {
-                intakeLiftMotor.set(-Config.intakeLiftSpeed);
+            double motorDelta = Math.abs(Position-upEncoderPos);
+            if (currentState != true || currentState == true && motorDelta > 0.06) {
+                
+                if (currentState == true && motorDelta > 0.06) {
+                    intakeLiftMotor.set(0.5);    
+                    System.out.println("COUNTER : " + Math.abs(Position-upEncoderPos));
+                    countering = true;
+                } else {
+                    intakeLiftMotor.set(Config.intakeLiftSpeed); // raise
+                    System.out.println("NORMAL RAISE");
+                }
             }
             /*if (!isDownEncoderSet && moving == false) {
                 downEncoderPos = Position;
@@ -68,8 +92,9 @@ public class Intake extends SubsystemBase {
             //
 
         } else {
-            if (currentState != false || currentState == true && Math.abs(Position-upEncoderPos) > 2) {
-                intakeLiftMotor.set(-Config.intakeLiftSpeed);
+            if (currentState != false ) {
+                intakeLiftMotor.set(-Config.intakeDownSpeed); //owering
+                System.out.println("LOWERing");
             }
             /*if (!isUpEncoderSet && moving == false) {
                 upEncoderPos = Position;
@@ -85,7 +110,8 @@ public class Intake extends SubsystemBase {
     public void lower() {
         //intakeSolenoid.set(false);
         //intakeLiftMotor.set(-Config.intakeDownSpeed);
-        state = true;
+        System.out.println("LOWER");
+        state = false;
     }
 
     /*
@@ -94,7 +120,7 @@ public class Intake extends SubsystemBase {
     public void raise() {
         //intakeSolenoid.set(true);
         //intakeLiftMotor.set(Config.intakeLiftSpeed);
-        state = false;
+        state = true;
     }
 
     /*

@@ -115,8 +115,8 @@ public class Robot extends TimedRobot {
     
     //Hood encoder
     dashboard.setShootAdjustEncoder(shooterAlign.getPosition());
-    System.out.println("POINTER: " + shooterAlign.getPosition());
-    System.out.println("DISTANC: " + limelight.getDistance());
+    //System.out.println("POINTER: " + shooterAlign.getPosition());
+    //System.out.println("DISTANC: " + limelight.getDistance());
 
 
     /* Send distance to dashboard ONLY if tape is detected by the Limelight */
@@ -171,7 +171,9 @@ public class Robot extends TimedRobot {
    * This function is executed periodically when in autonomous mode
    */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    intake.periodicIntake();
+  }
 
   /*
    * This function is executed only once when the robot changes into teleop mode
@@ -189,6 +191,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    intake.periodicIntake();
     dashboard.setLeftMotorPower(RobotMap.MiddleLeftMotor.get());
     dashboard.setRightMotorPower(RobotMap.MiddleRightMotor.get());
     dashboard.setIntakeMotorPower(RobotMap.intakeMotor.get());

@@ -60,7 +60,7 @@ public class OI {
 
     //driver binds above ^
     
-    shootButton = new JoystickButton(operator, 7);
+    shootButton = new JoystickButton(operator, 5);
     //raiseIntakeButton = new JoystickButton(operator, 6);
     //lowerIntakeButton = new JoystickButton(operator, 5);
     //intakeButton = new JoystickButton(operator, 3);
@@ -68,7 +68,7 @@ public class OI {
     shooterAdjustUpButton = new JoystickButton(operator, 4);
     shooterAdjustDownButton = new JoystickButton(operator, 1);
     //keepIntakeHighButton = new JoystickButton(operator, 8);
-    manualShootButton = new JoystickButton(operator, 8);
+    manualShootButton = new JoystickButton(operator, 6);
     revolverCCWButton = new JoystickButton(operator, 3);
 
     //operator binds aboven ^

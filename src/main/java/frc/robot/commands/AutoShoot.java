@@ -19,10 +19,10 @@ public class AutoShoot extends CommandBase {
      */
     double startTime = Timer.getFPGATimestamp();
     public AutoShoot() {
-        addRequirements(Robot.driveTrain);
+        //addRequirements(Robot.driveTrain);
         addRequirements(Robot.intake);
         //addRequirements(Robot.revolver);
-        addRequirements(Robot.shooter);
+        //addRequirements(Robot.shooter);
         addRequirements(Robot.shooterAlign);
     }
 
@@ -32,7 +32,7 @@ public class AutoShoot extends CommandBase {
     public void initialize() {
         Robot.limelight.setVision();
         Robot.limelight.ledOn();
-        Robot.shooter.on();
+        //Robot.shooter.on();
         startTime = Timer.getFPGATimestamp();
     }
 
@@ -45,18 +45,18 @@ public class AutoShoot extends CommandBase {
         boolean tapeFound = Robot.limelight.hasTarget();
         if (Robot.intake.currentState != true) {
             Robot.intake.lower();
-            Robot.driveTrain.stopTank();
+            //Robot.driveTrain.stopTank();
             //Robot.revolver.stop();
             Robot.shooterAlign.stop();
         } else {
             //Robot.intake.stopLift();
             if (tapeFound) {
-                Robot.aligner.robot();
+                //Robot.aligner.robot();
                 //
                 Robot.aligner.hood();
             } else {
                 System.out.println("No Tape found");
-                Robot.driveTrain.stopTank();
+                //Robot.driveTrain.stopTank();
             }
         }
     }
@@ -66,10 +66,10 @@ public class AutoShoot extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        Robot.driveTrain.stopTank();
+        //Robot.driveTrain.stopTank();
         Robot.intake.stopLift();
         //Robot.revolver.stop();
-        Robot.shooter.stop();
+        //Robot.shooter.stop();
         Robot.shooterAlign.stop();
         Robot.limelight.setDrive();
         Robot.limelight.ledOff();
