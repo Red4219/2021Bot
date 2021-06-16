@@ -29,7 +29,7 @@ public class MoveRevolver extends CommandBase {
     public void execute() {
         double rotateAmount = OI.operator.getRawAxis(4);
         if (Math.abs(rotateAmount) > 0.1) {
-            Robot.revolver.rotate(rotateAmount);
+            Robot.revolver.rotate(rotateAmount,false);
         } else if (OI.revolverCWButton.get()) {
             Robot.revolver.rotateCW();
             System.out.println("CW");

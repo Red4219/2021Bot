@@ -48,7 +48,7 @@ public class DriveTillDistance extends CommandBase {
 
         //
         //if (!RobotMap.intakeDownSwitch.get()) {
-            Robot.intake.lower();
+        Robot.intake.lower();
         //}
         /* Determine the starting (current) distance for both sides */
         startDistanceR = Robot.driveTrain.getRightDistance();
@@ -84,9 +84,6 @@ public class DriveTillDistance extends CommandBase {
         }*/
 
         // SAFETY JUST INCASE MY MATH SUCKS
-        if (Timer.getFPGATimestamp() - startTime > 1) {
-            Robot.intake.stopLift();
-        }
         if (rSpeed > 0.5 || lSpeed > 0.5) {
             rSpeed = 0.4;
             lSpeed = 0.4;

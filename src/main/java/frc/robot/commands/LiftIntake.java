@@ -36,7 +36,6 @@ public class LiftIntake extends CommandBase {
             //System.out.println("upswitch: " + RobotMap.intakeUpSwitch.get());
             //if (!RobotMap.intakeUpSwitch.get()) {
                 Robot.intake.raise();
-                System.out.println("Up???");
             //}
         } else {
             //System.out.println("downswitch: " + RobotMap.intakeDownSwitch.get());
@@ -52,7 +51,9 @@ public class LiftIntake extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        Robot.intake.stopLift();
+        if (interrupted) {
+            Robot.intake.stopLift();
+        }
     }
 
     /*
@@ -60,13 +61,14 @@ public class LiftIntake extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        if (moveUp) {
+        return true;
+        /*if (moveUp) {
             return !OI.raiseIntakeButton.get();
             //return RobotMap.intakeUpSwitch.get();
         } else {
             return !OI.lowerIntakeButton.get();
             //return RobotMap.intakeDownSwitch.get();
-        }
+        }*/
     }
 
     /*

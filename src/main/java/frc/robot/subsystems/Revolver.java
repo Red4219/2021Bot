@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Config;
@@ -77,11 +78,13 @@ public class Revolver extends SubsystemBase {
     /*
      * Rotate revolver from raw input
      */
-    public void rotate(double factor) {
+    public void rotate(double factor,boolean isAuto) {
         if (isFailing == false) {
             revolverMotor.set(factor * Config.revolverSpeed);
         }
-        safetyCheck();
+        if (!isAuto) {
+            safetyCheck();
+        }
     }
     /*
      * Stop revolver
