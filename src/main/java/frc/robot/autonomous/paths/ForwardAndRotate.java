@@ -17,8 +17,11 @@ public class ForwardAndRotate extends SequentialCommandGroup {
     public ForwardAndRotate() {
         addCommands(
             /* Drives forward for 6ft 0in */
-            new StraightDrive(true, 6, 0, false),
-            new RotateDrive(true, 180)
+            new StraightDrive(true, 15,5, true),
+            new StraightDrive(false, 15, 5, false),
+            new RotateDrive(true, 90),
+            new StraightDrive(false, 6, 0, true),
+            new RotateDrive(true, 90)
             //System.out.println("YEEEEE");
         );
     }

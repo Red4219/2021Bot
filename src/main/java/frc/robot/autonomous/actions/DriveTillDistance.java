@@ -47,9 +47,10 @@ public class DriveTillDistance extends CommandBase {
         Robot.driveTrain.resetDriveEncoders();
 
         //
-        //if (!RobotMap.intakeDownSwitch.get()) {
-        Robot.intake.lower();
-        //}
+        if (Robot.intake.currentState != false) {
+            Robot.intake.lower();
+            System.out.println("Trying to make drop");
+        }
         /* Determine the starting (current) distance for both sides */
         startDistanceR = Robot.driveTrain.getRightDistance();
         startDistanceL = Robot.driveTrain.getLeftDistance();
@@ -65,7 +66,7 @@ public class DriveTillDistance extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-
+        Robot.intake.periodicIntake();
         /* Get distance moved since command started */
         double currentL = 0.0;
         double currentR = 0.0;
@@ -105,7 +106,7 @@ public class DriveTillDistance extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return Robot.limelight.getDistance() <= driveDistance;
+        return Robot.limelight.getDistance() <= driveDistance || (Timer.getFPGATimestamp() - startTime > 3 );
     }
 
     /*

@@ -47,7 +47,10 @@ public class Shoot extends CommandBase {
          */
         Robot.revolver.resetEncoder();
         //if (!RobotMap.intakeDownSwitch.get()) {
-        Robot.intake.lower();
+        if (Robot.intake.currentState == true) {
+            Robot.intake.lower();
+        } 
+        
         //}
         //Robot.shooter.on();
     }
@@ -56,7 +59,13 @@ public class Shoot extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (Timer.getFPGATimestamp() - startTime > 6) {
+        Robot.intake.periodicIntake();
+        //
+        if (Timer.getFPGATimestamp() - startTime > 12 ) {
+            if (Robot.intake.currentState == false) {
+                Robot.intake.raise();
+            }
+        } else if (Timer.getFPGATimestamp() - startTime > 6) {
             Robot.shooterAlign.stop();
             Robot.shooter.on();
             Robot.revolver.rotate(-0.8,true);

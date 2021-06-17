@@ -43,7 +43,7 @@ public class AutoShoot extends CommandBase {
         /* Get distance moved since command started */
         double degreesOff = Robot.limelight.getTx();
         boolean tapeFound = Robot.limelight.hasTarget();
-        if (Robot.intake.currentState != true) {
+        if (Robot.intake.currentState != false) {
             Robot.intake.lower();
             //Robot.driveTrain.stopTank();
             //Robot.revolver.stop();

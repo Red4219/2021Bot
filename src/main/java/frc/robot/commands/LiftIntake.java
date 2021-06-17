@@ -27,6 +27,10 @@ public class LiftIntake extends CommandBase {
     /*
      * Function running periodically as long as isFinished() returns false
      */
+    boolean executed = false;
+    public void initialize() {
+        executed = false;
+    }
     public void execute() {
         //System.out.println("execute called");
         //System.out.println("upswitch: " + RobotMap.intakeUpSwitch.get());
@@ -44,6 +48,7 @@ public class LiftIntake extends CommandBase {
                 Robot.intake.lower();
           //  }
         }
+        executed = true;
     }
 
     /*
@@ -61,7 +66,7 @@ public class LiftIntake extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return true;
+        return executed;
         /*if (moveUp) {
             return !OI.raiseIntakeButton.get();
             //return RobotMap.intakeUpSwitch.get();

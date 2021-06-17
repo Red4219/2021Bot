@@ -50,7 +50,7 @@ public class Intake extends SubsystemBase {
             if (RPM < 10 ) {
                 failCount++;
                 System.out.println("FAIL INC");
-                if (failCount > 4 || countering && failCount > 2) {
+                if (failCount > 8 || countering && failCount > 8) {
                     moving = false;
                     countering = false;
                     intakeLiftMotor.stopMotor();
