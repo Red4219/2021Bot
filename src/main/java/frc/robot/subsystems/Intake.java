@@ -73,9 +73,9 @@ public class Intake extends SubsystemBase {
         }
         if (state == true) {
             double motorDelta = Math.abs(Position-upEncoderPos);
-            if (currentState != true || currentState == true && motorDelta > 0.06) {
+            if (currentState != true || (currentState == true && motorDelta > 0.22)) {
                 
-                if (currentState == true && motorDelta > 0.06) {
+                if (currentState == true && motorDelta > 0.22) {
                     intakeLiftMotor.set(0.5);    
                     System.out.println("COUNTER : " + Math.abs(Position-upEncoderPos));
                     countering = true;
