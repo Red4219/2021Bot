@@ -34,6 +34,7 @@ public class RobotMap {
   public static CANEncoder rightDriveEncoder;
   public static CANEncoder shooterAlignEncoder;
   public static CANEncoder revolverEncoder;
+  public static CANEncoder intakeLiftEncoder;
 
   /* Initialize motors */
   public static CANSparkMax revolverMotor;
@@ -43,8 +44,8 @@ public class RobotMap {
   public static CANSparkMax intakeLiftMotor;
 
   /* Initialize limit switches */
-  public static DigitalInput intakeUpSwitch;
-  public static DigitalInput intakeDownSwitch;
+  //public static DigitalInput intakeUpSwitch;
+  //public static DigitalInput intakeDownSwitch;
 
   /*
    * Initialize all components
@@ -60,12 +61,12 @@ public class RobotMap {
     BackRightMotor = new CANSparkMax(1, MotorType.kBrushless);
 
     /* Set ramp rate for drive motors to decrease current drawn and prevent browning out */
-    FrontLeftMotor.setOpenLoopRampRate(0.7);
-    MiddleLeftMotor.setOpenLoopRampRate(0.7);
-    BackLeftMotor.setOpenLoopRampRate(0.7);
-    FrontRightMotor.setOpenLoopRampRate(0.7);
-    MiddleRightMotor.setOpenLoopRampRate(0.7);
-    BackRightMotor.setOpenLoopRampRate(0.7);
+    FrontLeftMotor.setOpenLoopRampRate(0.5);
+    MiddleLeftMotor.setOpenLoopRampRate(0.5);
+    BackLeftMotor.setOpenLoopRampRate(0.5);
+    FrontRightMotor.setOpenLoopRampRate(0.5);
+    MiddleRightMotor.setOpenLoopRampRate(0.5);
+    BackRightMotor.setOpenLoopRampRate(0.5);
     
     /* Define SpeedControllerGroups for DifferentialDrive */
     leftGroup = new SpeedControllerGroup(FrontLeftMotor, MiddleLeftMotor, BackLeftMotor);
@@ -86,9 +87,9 @@ public class RobotMap {
     rightDriveEncoder = MiddleRightMotor.getEncoder();
     shooterAlignEncoder = shooterAlignMotor.getEncoder();
     revolverEncoder = revolverMotor.getEncoder();
-
+    intakeLiftEncoder = intakeLiftMotor.getEncoder();
     /* Define limit switches */
-    intakeUpSwitch = new DigitalInput(1);
-    intakeDownSwitch = new DigitalInput(2);
+    //intakeUpSwitch = new DigitalInput(1);
+    //intakeDownSwitch = new DigitalInput(2);
   }
 }

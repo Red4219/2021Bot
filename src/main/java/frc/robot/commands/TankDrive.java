@@ -29,8 +29,8 @@ public class TankDrive extends CommandBase {
         double rightAxis = OI.driver.getRawAxis(5);
 
         // Define Trigger
-        double linearForwardMovement = OI.driver.getRawAxis(3) * 0.5; // Right trigger 
-        double linearBackwardMovement = OI.driver.getRawAxis(2) * 0.5; // Left trigger 
+        double linearForwardMovement = OI.driver.getRawAxis(3) * 1; // Right trigger 
+        double linearBackwardMovement = OI.driver.getRawAxis(2) * 0.6; // Left trigger 
         //
         double leftSpeed = leftAxis;
         double rightSpeed = rightAxis;

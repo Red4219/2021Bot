@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
 import frc.robot.OI;
@@ -16,11 +17,12 @@ public class AutoShoot extends CommandBase {
     /*
      * Declares public function AutoShoot
      */
+    double startTime = Timer.getFPGATimestamp();
     public AutoShoot() {
-        addRequirements(Robot.driveTrain);
+        //addRequirements(Robot.driveTrain);
         addRequirements(Robot.intake);
         //addRequirements(Robot.revolver);
-        addRequirements(Robot.shooter);
+        //addRequirements(Robot.shooter);
         addRequirements(Robot.shooterAlign);
     }
 
@@ -30,7 +32,8 @@ public class AutoShoot extends CommandBase {
     public void initialize() {
         Robot.limelight.setVision();
         Robot.limelight.ledOn();
-        Robot.shooter.on();
+        //Robot.shooter.on();
+        startTime = Timer.getFPGATimestamp();
     }
 
     /*
@@ -40,43 +43,20 @@ public class AutoShoot extends CommandBase {
         /* Get distance moved since command started */
         double degreesOff = Robot.limelight.getTx();
         boolean tapeFound = Robot.limelight.hasTarget();
-
-        if (!RobotMap.intakeDownSwitch.get()) {
+        if (Robot.intake.currentState != false) {
             Robot.intake.lower();
-            Robot.driveTrain.stopTank();
+            //Robot.driveTrain.stopTank();
             //Robot.revolver.stop();
             Robot.shooterAlign.stop();
         } else {
-            Robot.intake.stop();
+            //Robot.intake.stopLift();
             if (tapeFound) {
-                if (Math.abs(degreesOff) > Config.shootTurnTolerance) {
-                    if (degreesOff > 0) {
-                        Robot.driveTrain.adjustTargetRight();
-                    } else {
-                        Robot.driveTrain.adjustTargetLeft();
-                    }
-                } else {
-                    Robot.driveTrain.stopTank();
-
-                    double alignTarget = Robot.shooterAlign.getTargetPosition(Robot.limelight.getDistance());
-
-                    if (Math.abs(Robot.shooterAlign.getPosition() - alignTarget) > Config.shootAlignTolerance) {
-                        //Robot.revolver.stop();
-
-                        if (Robot.shooterAlign.getPosition() > alignTarget) {
-                            Robot.shooterAlign.moveDown();
-                        } else {
-                            Robot.shooterAlign.moveUp();
-                        }
-                    } else {
-                        Robot.shooterAlign.stop();
-                        //Robot.revolver.rotateCW();
-                        //Robot.revolver.rotateCW();
-                    }
-                }
+                //Robot.aligner.robot();
+                //
+                Robot.aligner.hood();
             } else {
                 System.out.println("No Tape found");
-                Robot.driveTrain.stopTank();
+                //Robot.driveTrain.stopTank();
             }
         }
     }
@@ -86,10 +66,10 @@ public class AutoShoot extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        Robot.driveTrain.stopTank();
+        //Robot.driveTrain.stopTank();
         Robot.intake.stopLift();
         //Robot.revolver.stop();
-        Robot.shooter.stop();
+        //Robot.shooter.stop();
         Robot.shooterAlign.stop();
         Robot.limelight.setDrive();
         Robot.limelight.ledOff();

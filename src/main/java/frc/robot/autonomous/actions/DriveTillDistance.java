@@ -1,18 +1,19 @@
 package frc.robot.autonomous.actions;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Config;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /*
  * This command moves the robot straight a certain distance
  * 
  * Author: Francisco Fabregat
  */
-public class StraightDrive extends CommandBase {
+public class DriveTillDistance extends CommandBase {
 
     /* Initialize variables */
-    boolean forwardMovement;
     double driveDistance;
     double startDistanceL;
     double startDistanceR;
@@ -22,31 +23,34 @@ public class StraightDrive extends CommandBase {
     /*
      * Declares public function that takes direction and distance in feet and inches
      */
-    public StraightDrive(boolean forward, double userFeet, double userInches, boolean intake) {
+    public DriveTillDistance(double distance ) {
 
         /* Require the necessary subsystems */
-        addRequirements(Robot.driveTrain);
-
-        /* Sets wether the movement is forward or not */
-        forwardMovement = forward;
+        addRequirements(Robot.driveTrain,Robot.intake);
 
         /* Determine distance to move in feet */
-        driveDistance = (userFeet + (userInches / 12));
-
+        driveDistance = distance;
         /* Determine whether to start the intake or not while moving */
-        setIntake = intake;
     }
-
+    double startTime = Timer.getFPGATimestamp();
     /*
      * Function runs only once when the command starts
      */
     public void initialize() {
-
+        startTime = Timer.getFPGATimestamp();
         /*
          * Reset encoder values
          */
+        
+        Robot.limelight.setVision();
+        Robot.limelight.ledOn();
         Robot.driveTrain.resetDriveEncoders();
 
+        //
+        if (Robot.intake.currentState != false) {
+            Robot.intake.lower();
+            System.out.println("Trying to make drop");
+        }
         /* Determine the starting (current) distance for both sides */
         startDistanceR = Robot.driveTrain.getRightDistance();
         startDistanceL = Robot.driveTrain.getLeftDistance();
@@ -54,13 +58,15 @@ public class StraightDrive extends CommandBase {
         /* Print debug information in console */
         System.out.println("Drive Distance: " + driveDistance);
         System.out.println("Starting Distance: " + Robot.driveTrain.getRightDistance());
+
+        System.out.println("Tape Found: " + Robot.limelight.hasTarget());
     }
 
     /*
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-
+        Robot.intake.periodicIntake();
         /* Get distance moved since command started */
         double currentL = 0.0;
         double currentR = 0.0;
@@ -79,7 +85,6 @@ public class StraightDrive extends CommandBase {
         }*/
 
         // SAFETY JUST INCASE MY MATH SUCKS
-
         if (rSpeed > 0.5 || lSpeed > 0.5) {
             rSpeed = 0.4;
             lSpeed = 0.4;
@@ -90,18 +95,10 @@ public class StraightDrive extends CommandBase {
         /* Find an average of both distances moved to calculate an appropriate speed */
         // double averageDistance = (currentL + currentR) / 2;
 
-        /* Set a tank drive movement with speed returning from getSpeed() */
-        if (forwardMovement) {
-            // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance) * -1,
-            // getSpeed(currentL, driveDistance) * -1);
-            Robot.driveTrain.tankDrive(-lSpeed, -rSpeed);
-        } else {
-            // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance),
-            // getSpeed(currentL, driveDistance));
-            Robot.driveTrain.tankDrive(lSpeed, rSpeed);
-        }
+        Robot.driveTrain.tankDrive(-lSpeed, -rSpeed);
+        
         /* Print debug information in console */
-        System.out.println("Distance: " + Robot.driveTrain.getRightDistance());
+        System.out.println("Current lime dist: " + Robot.limelight.getDistance());
     }
 
     /*
@@ -109,15 +106,18 @@ public class StraightDrive extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return Math.abs(startDistanceR - Robot.driveTrain.getRightDistance()) >= driveDistance;
+        return Robot.limelight.getDistance() <= driveDistance || (Timer.getFPGATimestamp() - startTime > 3 );
     }
 
     /*
      * Stops drivetrain when command ends
      */
     protected void end() {
+        Robot.limelight.setDrive();
+        Robot.limelight.ledOff();
         Robot.driveTrain.stopTank();
         Robot.driveTrain.resetDriveEncoders();
+        Robot.intake.stopLift();
     }
 
     /*

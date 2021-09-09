@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
   public static Intake intake;
   public static Revolver revolver;
   public static Shooter shooter;
+  
   public static ShooterAlign shooterAlign;
   
   //
@@ -56,6 +57,8 @@ public class Robot extends TimedRobot {
   /* Initialize Limelight */
   public static Limelight limelight = new Limelight();
 
+  // Init aligner
+  public static Aligner aligner = new Aligner();
   /*
    * This function is executed only once when the robot boots up
    */
@@ -112,6 +115,9 @@ public class Robot extends TimedRobot {
     
     //Hood encoder
     dashboard.setShootAdjustEncoder(shooterAlign.getPosition());
+    //System.out.println("POINTER: " + shooterAlign.getPosition());
+    //System.out.println("DISTANC: " + limelight.getDistance());
+
 
     /* Send distance to dashboard ONLY if tape is detected by the Limelight */
     if (limelight.hasTarget()) {
@@ -165,7 +171,9 @@ public class Robot extends TimedRobot {
    * This function is executed periodically when in autonomous mode
    */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    
+  }
 
   /*
    * This function is executed only once when the robot changes into teleop mode
@@ -183,6 +191,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    intake.periodicIntake();
     dashboard.setLeftMotorPower(RobotMap.MiddleLeftMotor.get());
     dashboard.setRightMotorPower(RobotMap.MiddleRightMotor.get());
     dashboard.setIntakeMotorPower(RobotMap.intakeMotor.get());

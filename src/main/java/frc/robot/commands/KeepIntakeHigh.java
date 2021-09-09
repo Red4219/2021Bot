@@ -23,11 +23,11 @@ public class KeepIntakeHigh extends CommandBase {
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-        if (!RobotMap.intakeUpSwitch.get()) {
-            Robot.intake.raise();
-        } else {
-            Robot.intake.stopLift();
-        }
+        //if (!RobotMap.intakeUpSwitch.get()) {
+        //    Robot.intake.raise();
+        //} else {
+        //    Robot.intake.stopLift();
+        //}
     }
 
      /*

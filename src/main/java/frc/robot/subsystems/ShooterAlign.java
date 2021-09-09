@@ -24,6 +24,16 @@ public class ShooterAlign extends SubsystemBase {
     /*
      * Get encoder position of shooter aligner
      */
+    private boolean isSafe(double rawSpeed) {
+        double signum = Math.signum(rawSpeed);
+        if (signum == 0.0 || getPosition() > 0.0 && signum == -1 || getPosition() < 12 && signum == 1) { //TODO: fix pls
+            return true;
+        } else {
+            System.out.println("Limit");
+            stop();
+        }
+        return false;
+    }
     public double getPosition() {
         return RobotMap.shooterAlignEncoder.getPosition();
     }
@@ -39,25 +49,25 @@ public class ShooterAlign extends SubsystemBase {
      * Move shooter aligner up
      */
     public void moveUp() {
-        shooterAlignMotor.set(Config.shootAlignSpeed);
+        if (isSafe(1.0)) {
+            shooterAlignMotor.set(Config.shootAlignSpeed);
+        }
     }
     /*
      *
      */ 
     public void setMotor(double rawSpeed) {
-        double signum = Math.signum(rawSpeed);
-        if (signum == 0.0 || getPosition() > 0.0 && signum == -1 || getPosition() < 12 && signum == 1) { //TODO: fix pls
+        if (isSafe(rawSpeed)) {
             shooterAlignMotor.set(Config.shootAlignSpeed*rawSpeed);
-        } else {
-            System.out.println("Limit");
-            stop();
         }
     }
     /*
      * Move shooter aligner down
      */
     public void moveDown() {
-        shooterAlignMotor.set(-Config.shootAlignSpeed);
+        if (isSafe(-1.0)) {
+            shooterAlignMotor.set(-Config.shootAlignSpeed);
+        }
     }
 
     /*
@@ -90,16 +100,16 @@ public class ShooterAlign extends SubsystemBase {
         return cubic;
     }
     public double getTargetPosition(double distance) {
-        System.out.println("HELLO " + distance);
-        if (distance >= 48 && distance <= 147.2) {
-            double whole = (147.2 - 48);
-            double p0[] = {48,0.1};
-            double p1[] = {103.5,4};
-            double p2[] = {125.7,12};
-            double p3[] = {142.7,0};
+        //System.out.println("HELLO " + distance);
+        if (distance >= 48 && distance <= 150) {
+            double whole = (150 - 48);
+            double p0[] = {49.4,0};
+            double p1[] = {81.5,8.2};
+            double p2[] = {145.1,9.9};
+            double p3[] = {151.6,0};
 
             double result[] = cubicBezier((distance-48)/whole, p0, p1, p2, p3);
-            System.out.println((distance-48)/whole);
+            //System.out.println((distance-48)/whole);
             System.out.println(result[0] + ", " + result[1]);
             return result[1];
         }

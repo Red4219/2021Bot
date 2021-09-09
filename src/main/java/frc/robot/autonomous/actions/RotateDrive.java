@@ -16,8 +16,6 @@ public class RotateDrive extends CommandBase {
     double driveDistance;
     double startDistanceL;
     double startDistanceR;
-    double endDistanceL;
-    double endDistanceR;
     int counter = 0;
 
     /*
@@ -41,14 +39,11 @@ public class RotateDrive extends CommandBase {
      * Function runs only once when the command starts
      */
     public void initialize() {
-
         /*
          * Reset encoder values
          */
         Robot.driveTrain.resetDriveEncoders();
 
-        endDistanceL = Robot.driveTrain.getLeftDistance() + driveDistance;
-        endDistanceR = Robot.driveTrain.getRightDistance() + driveDistance;
         /* Determine the starting (current) distance for both sides */
         startDistanceR = Robot.driveTrain.getRightDistance();
         startDistanceL = Robot.driveTrain.getLeftDistance();
@@ -56,38 +51,50 @@ public class RotateDrive extends CommandBase {
         /* Print debug information in console */
         System.out.println("Drive Distance: " + driveDistance);
         System.out.println("Starting Distance: " + Robot.driveTrain.getRightDistance());
-        System.out.println("Left End Distance: " + endDistanceL);
-        System.out.println("Right End Distance: " + endDistanceR);
     }
 
     /*
      * Function running periodically as long as isFinished() returns false
      */
     public void execute() {
-
         /* Get distance moved since command started */
         double currentL = 0.0;
         double currentR = 0.0;
 
-        if (clockwise) {
-            currentL = Robot.driveTrain.getLeftDistance() - startDistanceL;
-            currentR = startDistanceR - Robot.driveTrain.getRightDistance();
-        } else {
-            currentL = Robot.driveTrain.getLeftDistance() - startDistanceL;
-            currentR = startDistanceR - Robot.driveTrain.getRightDistance();
+        currentL = Math.abs(startDistanceL - Robot.driveTrain.getLeftDistance());
+        currentR = Math.abs(startDistanceR - Robot.driveTrain.getRightDistance());
+
+        // compensate for potential motor inconsistencies. Will help with slight drift to 1 side
+        double rSpeed = 0.4;
+        double lSpeed = 0.4;
+        /*if (currentL > currentR) {
+            rSpeed *= (currentR/currentL);
+        } else if (currentR > currentL) {
+            lSpeed *= (currentL/currentR);
+        }*/
+
+        // SAFETY JUST INCASE MY MATH SUCKS
+
+        if (rSpeed > 0.5 || lSpeed > 0.5) {
+            rSpeed = 0.4;
+            lSpeed = 0.4;
+            System.out.println("VERY BAD AUTONOMOUS CODE");
         }
+
+        ///
         /* Find an average of both distances moved to calculate an appropriate speed */
         // double averageDistance = (currentL + currentR) / 2;
+
 
         /* Set a tank drive movement with speed returning from getSpeed() */
         if (clockwise) {
             // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance) * -1,
             // getSpeed(currentL, driveDistance) * -1);
-            Robot.driveTrain.tankDrive(-0.4, 0.4);
+            Robot.driveTrain.tankDrive(-lSpeed, rSpeed);
         } else {
             // Robot.driveTrain.tankDrive(getSpeed(currentL, driveDistance),
             // getSpeed(currentL, driveDistance));
-            Robot.driveTrain.tankDrive(-0.4, 0.4);
+            Robot.driveTrain.tankDrive(lSpeed, -rSpeed);
         }
         /* Print debug information in console */
         System.out.println("ROTATE Distance: " + Robot.driveTrain.getRightDistance());
@@ -100,7 +107,7 @@ public class RotateDrive extends CommandBase {
     public boolean isFinished() {
         //if (clockwise) {
             /* Command ends if current distance is greater than the end distance */
-            return (Math.abs(Robot.driveTrain.getRightDistance()) >= Math.abs(endDistanceR));
+            return Math.abs(startDistanceR - Robot.driveTrain.getRightDistance()) >= driveDistance;
         //} else {
             /*
              * Command ends if current distance is less than the end distance, as it is

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Config;
@@ -21,7 +22,7 @@ public class Revolver extends SubsystemBase {
     CANEncoder revolverEncoder = RobotMap.revolverEncoder;
 
     //Safety stuff
-    int failLimit = 12;
+    int failLimit = 15;
     int failCount = 0;
     boolean isFailing = false;
     /*
@@ -34,12 +35,12 @@ public class Revolver extends SubsystemBase {
     private void safetyCheck() {
         double RPM = Math.abs(revolverEncoder.getVelocity());
         System.out.println("REV RPM: " + RPM);
-        if (RPM < 60) {
+        if (RPM < 350) {
             failCount ++;
         }
         if (failCount >= failLimit) {
             isFailing = true;
-            stop(true);
+            //stop(true);
             OI.operator.setRumble(RumbleType.kLeftRumble, 0.5);
             OI.operator.setRumble(RumbleType.kRightRumble, 0.5);
         }
@@ -77,16 +78,20 @@ public class Revolver extends SubsystemBase {
     /*
      * Rotate revolver from raw input
      */
-    public void rotate(double factor) {
+    public void rotate(double factor,boolean isAuto) {
         if (isFailing == false) {
             revolverMotor.set(factor * Config.revolverSpeed);
         }
-        safetyCheck();
+        if (!isAuto) {
+            safetyCheck();
+        }
     }
     /*
      * Stop revolver
      */
     public void stop(boolean isAuto) {
+        OI.operator.setRumble(RumbleType.kLeftRumble, 0.0);
+        OI.operator.setRumble(RumbleType.kRightRumble, 0.0);
         revolverMotor.stopMotor();
         if (isAuto == false) {
             isFailing = false;

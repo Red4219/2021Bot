@@ -30,6 +30,7 @@ public class OI {
   public static JoystickButton autoAlignButton;
   public static JoystickButton keepIntakeHighButton;
   public static JoystickButton shootButton;
+  public static JoystickButton manualShootButton;
   public static JoystickButton shooterAdjustUpButton;
   public static JoystickButton shooterAdjustDownButton;
   public static JoystickButton revolverCCWButton;
@@ -59,7 +60,7 @@ public class OI {
 
     //driver binds above ^
     
-    shootButton = new JoystickButton(operator, 7);
+    shootButton = new JoystickButton(operator, 5);
     //raiseIntakeButton = new JoystickButton(operator, 6);
     //lowerIntakeButton = new JoystickButton(operator, 5);
     //intakeButton = new JoystickButton(operator, 3);
@@ -67,6 +68,7 @@ public class OI {
     shooterAdjustUpButton = new JoystickButton(operator, 4);
     shooterAdjustDownButton = new JoystickButton(operator, 1);
     //keepIntakeHighButton = new JoystickButton(operator, 8);
+    manualShootButton = new JoystickButton(operator, 6);
     revolverCCWButton = new JoystickButton(operator, 3);
 
     //operator binds aboven ^
@@ -79,8 +81,9 @@ public class OI {
     raiseIntakeButton.whenPressed(new LiftIntake(true));
     //shooterAdjustUpButton.whenPressed(new MoveShooterAdjust(true));
     //shooterAdjustDownButton.whenPressed(new MoveShooterAdjust(false));
-    shootButton.whenPressed(new ManualShoot());
-    //shootButton.whenPressed(new AutoShoot());
+    //shootButton.whenPressed(new ManualShoot());
+    shootButton.whenPressed(new AutoShoot());
+    manualShootButton.whenPressed(new ManualShoot());
     autoAlignButton.whenPressed(new AutoAlign());
     //revolverCWButton.whenPressed(new MoveRevolver(true));
     //revolverCCWButton.whenPressed(new MoveRevolver(false));
